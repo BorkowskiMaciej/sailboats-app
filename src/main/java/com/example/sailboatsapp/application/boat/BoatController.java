@@ -1,5 +1,6 @@
 package com.example.sailboatsapp.application.boat;
 
+import com.example.sailboatsapp.domain.boat.BoatFacade;
 import com.example.sailboatsapp.domain.boat.model.Boat;
 import com.example.sailboatsapp.domain.boat.repository.BoatRepository;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class BoatController {
 
-    @Autowired
-    private BoatRepository boatRepository;
+    private final BoatFacade boatFacade;
 
     @GetMapping("/boats")
     public String listBoats(Model model) {
-        model.addAttribute("boats", boatRepository.findAll());
+        model.addAttribute("boats", boatFacade.findAll());
         return "boats/list";
     }
 
@@ -31,7 +31,7 @@ public class BoatController {
 
     @PostMapping("/boats")
     public String addBoat(Boat boat) {
-        boatRepository.save(boat);
+        boatFacade.addBoat(boat);
         return "redirect:/boats";
     }
 }

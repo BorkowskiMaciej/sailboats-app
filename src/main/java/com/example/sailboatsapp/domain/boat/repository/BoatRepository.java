@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BoatRepository extends JpaRepository<Boat, Long> {
 
-    Boat findByName(String name);
-
 }
