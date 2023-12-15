@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+    <script>
+        function toggleCompanyFields() {
+            var checkBox = document.getElementById("isCompany");
+            var companyFields = document.getElementById("companyFields");
+            companyFields.style.display = checkBox.checked ? "block" : "none";
+        }
+    </script>
+</head>
+<body onload="toggleCompanyFields()">
+<h1>Register</h1>
+<form th:action="@{/register}" th:object="${user}" method="post">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" th:field="*{username}" />
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
+    </div>
+
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" />
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
+    </div>
+
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" th:field="*{name}" />
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+    </div>
+
+    <div>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" th:field="*{surname}" />
+        <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname Error</div>
+    </div>
+
+    <div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" />
+        <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</div>
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" />
+        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+    </div>
+
+    <div>
+        <label for="role">Role:</label>
+        <input type="text" id="role" th:field="*{role}" />
+        <div th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</div>
+    </div>
+
+    <div>
+        <label for="isCompany">Is Company:</label>
+        <input type="checkbox" id="isCompany" th:field="*{isCompany}" onchange="toggleCompanyFields()"/>
+    </div>
+
+    <div id="companyFields" style="display:none;">
+        <div>
+            <label for="companyName">Company Name:</label>
+            <input type="text" id="companyName" th:field="*{companyName}" />
+            <div th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Company Name Error</div>
+        </div>
+
+        <div>
+            <label for="tin">TIN:</label>
+            <input type="text" id="tin" th:field="*{tin}" />
+            <div th:if="${#fields.hasErrors('tin')}" th:errors="*{tin}">TIN Error</div>
+        </div>
+
+        <div>
+            <label for="address">Address:</label>
+            <input type="text" id="address" th:field="*{address}" />
+            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</div>
+        </div>
+    </div>
+
+    <div>
+        <input type="submit" value="Register" />
+    </div>
+</form>
+</body>
+</html>

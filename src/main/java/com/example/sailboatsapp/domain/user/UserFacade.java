@@ -1,5 +1,6 @@
 package com.example.sailboatsapp.domain.user;
 
+import com.example.sailboatsapp.domain.user.model.User;
 import com.example.sailboatsapp.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -9,5 +10,13 @@ import org.springframework.stereotype.Component;
 public class UserFacade {
 
     private final UserRepository userRepository;
+
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
+
+    public boolean checkIfUserExists(String username) {
+        return userRepository.existsByUsername(username);
+    }
 
 }
