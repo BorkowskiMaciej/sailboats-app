@@ -1,13 +1,8 @@
-CREATE TABLE IF NOT EXISTS przykladowa_tabela
-(
-    id    SERIAL PRIMARY KEY,
-    nazwa VARCHAR(255) NOT NULL,
-    opis  TEXT
-);
+DROP TABLE IF EXISTS boat;
 
 CREATE TABLE IF NOT EXISTS boat
 (
-    id    bigint PRIMARY KEY,
+    id   SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(255) NOT NULL
 );

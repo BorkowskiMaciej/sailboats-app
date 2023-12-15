@@ -1,10 +1,9 @@
-package com.example.sailboatsapp.domain.boat.entity;
+package com.example.sailboatsapp.domain.boat.model;
 
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
-@Table
+@Entity(name = "boat")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,6 +12,7 @@ import lombok.*;
 public class Boat {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String type;

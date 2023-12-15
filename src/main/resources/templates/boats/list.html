@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>List of Boats</title>
+</head>
+<body>
+<h1>List of Boats</h1>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+    </tr>
+    <tr th:each="boat : ${boats}">
+        <td th:text="${boat.id}"></td>
+        <td th:text="${boat.name}"></td>
+        <td th:text="${boat.type}"></td>
+    </tr>
+</table>
+<a href="/boats/add">Add a new boat</a>
+</body>
+</html>
