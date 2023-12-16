@@ -5,8 +5,6 @@ import com.example.sailboatsapp.domain.offer.model.Offer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.Set;
@@ -18,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class User {
+public class AppUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +24,6 @@ public class User {
 
     @NotEmpty(message = "Nazwa użytkownika nie może być pusta.")
     private String username;
-    @Size(min = 8, message = "Hasło musi miec co najmniej 8 znaków.")
-    @Size(max = 30, message = "Hasło nie może mie więcej niż 30 znaków.")
     private String password;
     @NotBlank(message = "Nazwa użytkownika nie może być pusta.")
     private String name;

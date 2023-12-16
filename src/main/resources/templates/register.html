@@ -12,7 +12,7 @@
 </head>
 <body onload="toggleCompanyFields()">
 <h1>Register</h1>
-<form th:action="@{/register}" th:object="${user}" method="post">
+<form th:action="@{/register}" th:object="${appUser}" method="post">
     <div>
         <label for="username">Username:</label>
         <input type="text" id="username" th:field="*{username}" />

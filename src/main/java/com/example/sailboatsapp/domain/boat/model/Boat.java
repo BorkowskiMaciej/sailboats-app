@@ -1,6 +1,6 @@
 package com.example.sailboatsapp.domain.boat.model;
 
-import com.example.sailboatsapp.domain.user.model.User;
+import com.example.sailboatsapp.domain.user.model.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,6 +25,6 @@ public class Boat {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private User owner;
+    private AppUser owner;
 
 }

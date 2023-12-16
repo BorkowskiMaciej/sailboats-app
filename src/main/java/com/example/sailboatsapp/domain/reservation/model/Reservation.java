@@ -1,7 +1,7 @@
 package com.example.sailboatsapp.domain.reservation.model;
 
 import com.example.sailboatsapp.domain.offer.model.Offer;
-import com.example.sailboatsapp.domain.user.model.User;
+import com.example.sailboatsapp.domain.user.model.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +23,5 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "tenant_id")
-    private User tenant;
+    private AppUser tenant;
 }
