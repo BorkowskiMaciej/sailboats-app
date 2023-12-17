@@ -8,11 +8,38 @@
             var companyFields = document.getElementById("companyFields");
             companyFields.style.display = checkBox.checked ? "block" : "none";
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            var password = document.getElementById("password");
+            var confirmPassword = document.getElementById("confirmPassword");
+            var validationMessage = document.getElementById("validationMessage");
+
+            function validatePassword() {
+                if (password.value !== confirmPassword.value) {
+                    validationMessage.textContent = "Hasła nie są identyczne.";
+                } else {
+                    validationMessage.textContent = "";
+                }
+            }
+
+            password.addEventListener("keyup", validatePassword);
+            confirmPassword.addEventListener("keyup", validatePassword);
+        });
+
+        function validatePassword() {
+            var newPassword = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (newPassword !== confirmPassword) {
+                alert("Hasła nie są identyczne.");
+                return false;
+            }
+            return true;
+        }
     </script>
 </head>
 <body onload="toggleCompanyFields()">
 <h1>Register</h1>
-<form th:action="@{/auth/register}" th:object="${appUser}" method="post">
+<form th:action="@{/auth/register}" th:object="${appUser}" method="post" onsubmit="return validatePassword()">
     <div>
         <label for="username">Username:</label>
         <input type="text" id="username" th:field="*{username}"
@@ -25,7 +52,11 @@
         <input type="password" id="password" th:field="*{password}" minlength="8" maxlength="30" required />
         <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     </div>
-
+    <div>
+        <label for="confirmPassword">Potwierdź hasło:</label>
+        <input type="password" id="confirmPassword" required />
+    </div>
+    <div id="validationMessage" style="color: red;"></div>
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" th:field="*{name}" />

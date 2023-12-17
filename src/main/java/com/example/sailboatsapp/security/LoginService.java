@@ -27,6 +27,7 @@ public class LoginService {
 
     public void confirm(String username) {
         userFacade.confirmUser(username);
+
     }
 
     public void requestPasswordReset(AppUser user) {
@@ -37,6 +38,7 @@ public class LoginService {
 
     public void resetPassword(String username, String password) {
         userFacade.updatePassword(username, passwordEncoder.encode(password));
+        userFacade.setPasswordResetCode(username, null);
     }
 
 }

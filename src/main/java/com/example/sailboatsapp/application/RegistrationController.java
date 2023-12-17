@@ -113,14 +113,7 @@ public class RegistrationController {
     public String resetPassword(
             @RequestParam("resetCode") String resetCode,
             @RequestParam("newPassword") String newPassword,
-            @RequestParam("confirmPassword") String confirmPassword,
             Model model) {
-
-        //TODO: add this validation on client side
-        if (!newPassword.equals(confirmPassword)) {
-            model.addAttribute("error", "Hasła nie są takie same.");
-            return "enterResetCode";
-        }
 
         Optional<AppUser> user = userFacade.findByResetPasswordCode(resetCode);
         if (user.isPresent()) {

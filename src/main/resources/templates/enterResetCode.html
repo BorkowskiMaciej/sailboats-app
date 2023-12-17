@@ -1,28 +1,60 @@
-<!-- enterResetCode.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Wprowadź kod resetowania</title>
+    <title>Wprowadź kod resetowania</title>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            var newPassword = document.getElementById("newPassword");
+            var confirmPassword = document.getElementById("confirmPassword");
+            var validationMessage = document.getElementById("validationMessage");
+
+            function validatePassword() {
+                if (newPassword.value !== confirmPassword.value) {
+                    validationMessage.textContent = "Hasła nie są identyczne.";
+                } else {
+                    validationMessage.textContent = "";
+                }
+            }
+
+            newPassword.addEventListener("keyup", validatePassword);
+            confirmPassword.addEventListener("keyup", validatePassword);
+        });
+
+        function validatePassword() {
+            var newPassword = document.getElementById("newPassword").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (newPassword !== confirmPassword) {
+                alert("Hasła nie są identyczne.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 <h1>Wprowadź kod resetowania hasła</h1>
-<form th:action="@{/auth/reset-password}" method="post">
-  <div>
-    <label for="resetCode">Kod resetowania:</label>
-    <input type="text" id="resetCode" name="resetCode" required />
-  </div>
-  <div>
-    <label for="newPassword">Nowe hasło:</label>
-    <input type="password" id="newPassword" name="newPassword" required />
-  </div>
-  <div>
-    <label for="confirmPassword">Potwierdź nowe hasło:</label>
-    <input type="password" id="confirmPassword" name="confirmPassword" required />
-  </div>
-  <div>
-    <input type="submit" value="Zresetuj hasło" />
-  </div>
+<form th:action="@{/auth/reset-password}" method="post" onsubmit="return validatePassword()">
+    <div>
+        <label for="resetCode">Kod resetowania:</label>
+        <input type="text" id="resetCode" name="resetCode" required />
+    </div>
+    <div>
+        <label for="newPassword">Nowe hasło:</label>
+        <input type="password" id="newPassword" name="newPassword" required />
+    </div>
+    <div>
+        <label for="confirmPassword">Potwierdź nowe hasło:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required />
+    </div>
+    <div id="validationMessage" style="color: red;"></div>
+    <div>
+        <input type="submit" value="Zresetuj hasło" />
+    </div>
 </form>
-<div th:if="${message}" th:text="${message}"></div>
+<div th:if="${error}" th:text="${error}" style="color: red;"></div>
+
+<div th:if="${message}" th:text="${message}" style="color: green;"></div>
 </body>
 </html>
+
