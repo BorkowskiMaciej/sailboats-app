@@ -3,7 +3,6 @@ package com.example.sailboatsapp.application;
 import com.example.sailboatsapp.domain.user.UserFacade;
 import com.example.sailboatsapp.domain.user.model.AppUser;
 import com.example.sailboatsapp.security.LoginService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,31 +31,31 @@ public class RegistrationController {
         if (error != null) {
             model.addAttribute("loginError", "Błędne dane logowania lub niezweryfikowane konto.");
         }
-        return "login";
+        return "authorization/login";
     }
 
     @GetMapping("/register")
     public ModelAndView showRegistrationForm() {
-        ModelAndView mav = new ModelAndView("register");
+        ModelAndView mav = new ModelAndView("authorization/register");
         mav.addObject("appUser", new AppUser());
         return mav;
     }
 
     @GetMapping("/confirm")
     public String showConfirmationForm() {
-        return "confirm";
+        return "authorization/confirm";
     }
 
     @GetMapping("/request-reset-password")
     public String showResetPasswordRequestForm() {
-        return "resetPasswordRequest";
+        return "authorization/resetPasswordRequest";
     }
 
     @PostMapping("/register")
     public String registerUser(@Valid AppUser appUser, BindingResult bindingResult) {
         if (userFacade.checkIfUserExists(appUser.getUsername())) {
             bindingResult.rejectValue("username", "error.user", "Konto z taką nazwą użytkownika już istnieje.");
-            return "register";
+            return "authorization/register";
         }
         if (Boolean.TRUE.equals(appUser.getIsCompany())) {
             if (appUser.getCompanyName() == null || appUser.getCompanyName().trim().isEmpty()) {
@@ -74,7 +73,7 @@ public class RegistrationController {
             return "redirect:/auth/confirm";
         }
 
-        return "register";
+        return "authorization/register";
     }
 
     @PostMapping("/confirm")
@@ -86,10 +85,10 @@ public class RegistrationController {
         if (user.isPresent()) {
             loginService.confirm(user.get().getUsername());
             model.addAttribute("message", "Konto zostało pomyślnie aktywowane.");
-            return "confirmSuccess";
+            return "authorization/confirmSuccess";
         } else {
             model.addAttribute("message", "Nieprawidłowy kod potwierdzający.");
-            return "confirm";
+            return "authorization/confirm";
         }
     }
 
@@ -102,10 +101,10 @@ public class RegistrationController {
         if (user.isPresent()) {
             loginService.requestPasswordReset(user.get());
             model.addAttribute("message", "Kod resetowania hasła został wysłany na Twój adres e-mail.");
-            return "enterResetCode";
+            return "authorization/enterResetCode";
         } else {
             model.addAttribute("error", "Nie znaleziono konta z podanym adresem e-mail.");
-            return "resetPasswordRequest";
+            return "authorization/resetPasswordRequest";
         }
     }
 
@@ -119,10 +118,10 @@ public class RegistrationController {
         if (user.isPresent()) {
             loginService.resetPassword(user.get().getUsername(), newPassword);
             model.addAttribute("message", "Twoje hasło zostało zresetowane.");
-            return "login";
+            return "authorization/login";
         } else {
             model.addAttribute("error", "Nieprawidłowy kod resetowania.");
-            return "enterResetCode";
+            return "authorization/enterResetCode";
         }
     }
 

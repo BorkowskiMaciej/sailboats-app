@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS "app_user";
 CREATE TABLE IF NOT EXISTS "app_user"
 (
     id           SERIAL PRIMARY KEY,
-    username     VARCHAR(255) NOT NULL,
+    username     VARCHAR(255) NOT NULL UNIQUE,
     password     VARCHAR(255) NOT NULL,
     name         VARCHAR(255) NOT NULL,
     surname      VARCHAR(255) NOT NULL,

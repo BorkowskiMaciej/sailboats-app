@@ -45,5 +45,8 @@ public class UserFacade {
         userRepository.confirmUser(username);
     }
 
+    public void clearConfirmationCode(String username) {
+        userRepository.clearConfirmationCode(username);
+    }
 
 }

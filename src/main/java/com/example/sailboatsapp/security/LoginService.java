@@ -27,7 +27,7 @@ public class LoginService {
 
     public void confirm(String username) {
         userFacade.confirmUser(username);
-
+        userFacade.clearConfirmationCode(username);
     }
 
     public void requestPasswordReset(AppUser user) {

@@ -33,6 +33,11 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
     @Query("UPDATE AppUser u SET u.password = :password WHERE u.username = :username")
     void updatePassword(String username, String password);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE AppUser u SET u.confirmationCode = null WHERE u.username = :username")
+    void clearConfirmationCode(String username);
+
     Optional<AppUser> findByEmail(String email);
 
     Optional<AppUser> findByResetPasswordCode(String resetCode);
