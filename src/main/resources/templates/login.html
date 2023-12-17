@@ -6,9 +6,24 @@
 <body>
 <h1>Login</h1>
 <form th:action="@{/login}" method="post">
-    <div><label> Username: <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Sign In"/></div>
+    <div>
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="username" />
+    </div>
+    <div>
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" />
+    </div>
+    <div th:if="${loginError}" th:text="${loginError}"></div>
+    <div>
+        <input type="submit" value="Sign In" />
+    </div>
 </form>
+<div>
+    <a href="/register">Zarejestruj się</a>
+</div>
+<div>
+    <a href="/request-reset-password">Zapomniałeś hasła?</a>
+</div>
 </body>
 </html>

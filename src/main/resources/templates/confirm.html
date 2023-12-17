@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Potwierdzenie rejestracji</title>
+</head>
+<body>
+<h1>Potwierdź swój kod</h1>
+<form th:action="@{/confirm}" method="post">
+  <div>
+    <label for="confirmationCode">Kod potwierdzający:</label>
+    <input type="text" id="confirmationCode" name="confirmationCode" required />
+  </div>
+  <div>
+    <input type="submit" value="Potwierdź" />
+  </div>
+</form>
+<div th:if="${message}" th:text="${message}"></div>
+</body>
+</html>

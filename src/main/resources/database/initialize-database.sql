@@ -13,10 +13,12 @@ CREATE TABLE IF NOT EXISTS "app_user"
     phone_number VARCHAR(255) NOT NULL,
     email        VARCHAR(255) NOT NULL,
     is_company   BOOLEAN      NOT NULL,
+    is_confirmed    BOOLEAN      NOT NULL,
+    confirmation_code VARCHAR(255),
+    reset_password_code VARCHAR(255),
     company_name VARCHAR(255),
     TIN          VARCHAR(255),
-    address      VARCHAR(255),
-    role         VARCHAR(255) NOT NULL
+    address      VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS boat

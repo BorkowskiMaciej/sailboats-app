@@ -20,6 +20,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         AppUser userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        if (!userEntity.getIsConfirmed()) {
+            throw new UsernameNotFoundException("Account not confirmed");
+        }
+
         return User.builder()
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())

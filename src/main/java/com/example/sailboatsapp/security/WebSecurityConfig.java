@@ -17,10 +17,11 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/boats/**").hasRole("USER")
-                .requestMatchers("/register", "/login").permitAll()
+                .requestMatchers("/", "/register", "/login", "/confirm", "/reset-password", "/request-reset-password").permitAll()
                 .anyRequest().authenticated())
                 .formLogin(form -> form
-                        .loginPage("/login").defaultSuccessUrl("/", true).permitAll())
+                        .loginPage("/login").defaultSuccessUrl("/boats", true).permitAll()
+                        .failureUrl("/login?error=true"))
                 .logout(LogoutConfigurer::permitAll);
 
         return http.build();

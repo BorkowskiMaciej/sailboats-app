@@ -15,13 +15,14 @@
 <form th:action="@{/register}" th:object="${appUser}" method="post">
     <div>
         <label for="username">Username:</label>
-        <input type="text" id="username" th:field="*{username}" />
+        <input type="text" id="username" th:field="*{username}"
+               pattern="^[^\s]+$" title="Nazwa użytkownika nie może zawierać białych znaków." required />
         <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
     </div>
 
     <div>
         <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" />
+        <input type="password" id="password" th:field="*{password}" minlength="8" maxlength="30" required />
         <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
     </div>
 
@@ -47,12 +48,6 @@
         <label for="email">Email:</label>
         <input type="email" id="email" th:field="*{email}" />
         <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
-    </div>
-
-    <div>
-        <label for="role">Role:</label>
-        <input type="text" id="role" th:field="*{role}" />
-        <div th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</div>
     </div>
 
     <div>
