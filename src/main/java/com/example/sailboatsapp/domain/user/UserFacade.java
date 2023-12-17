@@ -13,24 +13,8 @@ public class UserFacade {
 
     private final UserRepository userRepository;
 
-    public void addUser(AppUser appUser) {
-        userRepository.save(appUser);
-    }
-
-    public boolean checkIfUserExists(String username) {
-        return userRepository.existsByUsername(username);
-    }
-
     public Optional<AppUser> findByConfirmationCode(String confirmationCode) {
         return userRepository.findByConfirmationCode(confirmationCode);
-    }
-
-    public void confirmUser(String username) {
-        userRepository.confirmUser(username);
-    }
-
-    public void setPasswordResetCode(String username, String resetPasswordCode) {
-        userRepository.setResetPasswordCode(username, resetPasswordCode);
     }
 
     public Optional<AppUser> findByEmail(String email) {
@@ -41,8 +25,25 @@ public class UserFacade {
         return userRepository.findByResetPasswordCode(resetCode);
     }
 
+    public boolean checkIfUserExists(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public void register(AppUser user) {
+        userRepository.save(user);
+    }
+
+    public void setPasswordResetCode(String username, String resetPasswordCode) {
+        userRepository.setResetPasswordCode(username, resetPasswordCode);
+    }
+
     public void updatePassword(String username, String newPassword) {
         userRepository.updatePassword(username, newPassword);
     }
+
+    public void confirmUser(String username) {
+        userRepository.confirmUser(username);
+    }
+
 
 }
