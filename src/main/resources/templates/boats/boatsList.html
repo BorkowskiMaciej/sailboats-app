@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Lista łódek</title>
+</head>
+<body>
+<h1>Lista łódek</h1>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nazwa</th>
+    <th>Typ</th>
+    <th>Model</th>
+    <th>Liczba osób</th>
+    <th>Liczba kabin</th>
+    <th>Rok produkcji</th>
+    <th>Moc silnika</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="boat : ${boats}">
+    <td th:text="${boat.id}"></td>
+    <td th:text="${boat.name}"></td>
+    <td th:text="${boat.type}"></td>
+    <td th:text="${boat.model}"></td>
+    <td th:text="${boat.maxHeadcount}"></td>
+    <td th:text="${boat.cabinsNumber}"></td>
+    <td th:text="${boat.prodYear}"></td>
+    <td th:text="${boat.enginePower}"></td>
+  </tr>
+  </tbody>
+</table>
+<div>
+  <a th:href="@{/boats/add}" class="btn btn-primary">Dodaj nową łódkę</a>
+</div>
+</body>
+</html>

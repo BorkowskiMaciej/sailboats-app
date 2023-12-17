@@ -1,37 +1,37 @@
-DROP TABLE IF EXISTS reservation;
-DROP TABLE IF EXISTS offer;
-DROP TABLE IF EXISTS boat;
-DROP TABLE IF EXISTS "app_user";
+-- DROP TABLE IF EXISTS reservation;
+-- DROP TABLE IF EXISTS offer;
+-- DROP TABLE IF EXISTS boat;
+-- DROP TABLE IF EXISTS "app_user";
 
 CREATE TABLE IF NOT EXISTS "app_user"
 (
-    id           SERIAL PRIMARY KEY,
-    username     VARCHAR(255) NOT NULL UNIQUE,
-    password     VARCHAR(255) NOT NULL,
-    name         VARCHAR(255) NOT NULL,
-    surname      VARCHAR(255) NOT NULL,
-    phone_number VARCHAR(255) NOT NULL,
-    email        VARCHAR(255) NOT NULL,
-    is_company   BOOLEAN      NOT NULL,
-    is_confirmed    BOOLEAN      NOT NULL,
-    confirmation_code VARCHAR(255),
+    id                  SERIAL PRIMARY KEY,
+    username            VARCHAR(255) NOT NULL UNIQUE,
+    password            VARCHAR(255) NOT NULL,
+    name                VARCHAR(255) NOT NULL,
+    surname             VARCHAR(255) NOT NULL,
+    phone_number        VARCHAR(255) NOT NULL,
+    email               VARCHAR(255) NOT NULL,
+    is_company          BOOLEAN      NOT NULL,
+    is_confirmed        BOOLEAN      NOT NULL,
+    confirmation_code   VARCHAR(255),
     reset_password_code VARCHAR(255),
-    company_name VARCHAR(255),
-    TIN          VARCHAR(255),
-    address      VARCHAR(255)
+    company_name        VARCHAR(255),
+    TIN                 VARCHAR(255),
+    address             VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS boat
 (
     id            SERIAL PRIMARY KEY,
-    name          VARCHAR(255) NOT NULL,
-    type          VARCHAR(255) NOT NULL,
-    model         VARCHAR(255) NOT NULL,
-    max_headcount INTEGER      NOT NULL,
-    cabins_number INTEGER      NOT NULL,
-    prod_year     INTEGER      NOT NULL,
-    engine_power  INTEGER      NOT NULL,
-    owner_id      INTEGER REFERENCES "app_user" (id)
+    name          VARCHAR(255)                       NOT NULL,
+    type          VARCHAR(255)                       NOT NULL,
+    model         VARCHAR(255)                       NOT NULL,
+    max_headcount INTEGER                            NOT NULL,
+    cabins_number INTEGER                            NOT NULL,
+    prod_year     INTEGER                            NOT NULL,
+    engine_power  INTEGER                            NOT NULL,
+    owner_id      INTEGER REFERENCES "app_user" (id) NOT NULL
 
 );
 

@@ -25,7 +25,7 @@ public class Offer {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private AppUser owner;
+    private AppUser ownerId;
 
     private String port;
     private Integer price;

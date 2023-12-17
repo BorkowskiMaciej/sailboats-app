@@ -1,6 +1,6 @@
 package com.example.sailboatsapp.security;
 
-import com.example.sailboatsapp.domain.user.UserFacade;
+import com.example.sailboatsapp.domain.user.UserService;
 import com.example.sailboatsapp.domain.user.model.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +14,7 @@ public class LoginService {
 
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
-    private final UserFacade userFacade;
+    private final UserService userService;
 
     public void register(AppUser user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -22,23 +22,23 @@ public class LoginService {
         String confirmationCode = UUID.randomUUID().toString();
         user.setConfirmationCode(confirmationCode);
         emailService.sendConfirmationCode(user.getEmail(), confirmationCode);
-        userFacade.register(user);
+        userService.register(user);
     }
 
     public void confirm(String username) {
-        userFacade.confirmUser(username);
-        userFacade.clearConfirmationCode(username);
+        userService.confirmUser(username);
+        userService.clearConfirmationCode(username);
     }
 
     public void requestPasswordReset(AppUser user) {
         String resetCode = UUID.randomUUID().toString();
-        userFacade.setPasswordResetCode(user.getUsername(), resetCode);
+        userService.setPasswordResetCode(user.getUsername(), resetCode);
         emailService.sendResetPasswordCode(user.getEmail(), resetCode);
     }
 
     public void resetPassword(String username, String password) {
-        userFacade.updatePassword(username, passwordEncoder.encode(password));
-        userFacade.setPasswordResetCode(username, null);
+        userService.updatePassword(username, passwordEncoder.encode(password));
+        userService.setPasswordResetCode(username, null);
     }
 
 }

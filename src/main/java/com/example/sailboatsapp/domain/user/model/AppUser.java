@@ -48,10 +48,10 @@ public class AppUser {
     @Column(name = "reset_password_code")
     private String resetPasswordCode;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "ownerId")
     private Set<Boat> boats;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "ownerId")
     private Set<Offer> offers;
 
 }

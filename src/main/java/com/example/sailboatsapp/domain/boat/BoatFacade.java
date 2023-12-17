@@ -21,6 +21,10 @@ public class BoatFacade {
         return boatRepository.findAll();
     }
 
+    public Collection<Boat> findAllByOwnerId(Long ownerId) {
+        return boatRepository.findAllByOwnerId(ownerId);
+    }
+
 
 
 }

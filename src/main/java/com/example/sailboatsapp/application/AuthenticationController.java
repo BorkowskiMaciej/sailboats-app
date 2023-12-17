@@ -1,6 +1,6 @@
 package com.example.sailboatsapp.application;
 
-import com.example.sailboatsapp.domain.user.UserFacade;
+import com.example.sailboatsapp.domain.user.UserService;
 import com.example.sailboatsapp.domain.user.model.AppUser;
 import com.example.sailboatsapp.security.LoginService;
 import jakarta.validation.Valid;
@@ -21,9 +21,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Slf4j
-public class RegistrationController {
+public class AuthenticationController {
 
-    private final UserFacade userFacade;
+    private final UserService userService;
     private final LoginService loginService;
 
     @GetMapping("/login")
@@ -53,7 +53,7 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public String registerUser(@Valid AppUser appUser, BindingResult bindingResult) {
-        if (userFacade.checkIfUserExists(appUser.getUsername())) {
+        if (userService.checkIfUserExists(appUser.getUsername())) {
             bindingResult.rejectValue("username", "error.user", "Konto z taką nazwą użytkownika już istnieje.");
             return "authorization/register";
         }
@@ -81,7 +81,7 @@ public class RegistrationController {
             @RequestParam("confirmationCode") String confirmationCode,
             Model model) {
 
-        Optional<AppUser> user = userFacade.findByConfirmationCode(confirmationCode);
+        Optional<AppUser> user = userService.findByConfirmationCode(confirmationCode);
         if (user.isPresent()) {
             loginService.confirm(user.get().getUsername());
             model.addAttribute("message", "Konto zostało pomyślnie aktywowane.");
@@ -97,7 +97,7 @@ public class RegistrationController {
             @RequestParam("email") String email,
             Model model) {
 
-        Optional<AppUser> user = userFacade.findByEmail(email);
+        Optional<AppUser> user = userService.findByEmail(email);
         if (user.isPresent()) {
             loginService.requestPasswordReset(user.get());
             model.addAttribute("message", "Kod resetowania hasła został wysłany na Twój adres e-mail.");
@@ -114,7 +114,7 @@ public class RegistrationController {
             @RequestParam("newPassword") String newPassword,
             Model model) {
 
-        Optional<AppUser> user = userFacade.findByResetPasswordCode(resetCode);
+        Optional<AppUser> user = userService.findByResetPasswordCode(resetCode);
         if (user.isPresent()) {
             loginService.resetPassword(user.get().getUsername(), newPassword);
             model.addAttribute("message", "Twoje hasło zostało zresetowane.");
