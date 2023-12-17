@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Login</h1>
-<form th:action="@{/login}" method="post">
+<form th:action="@{/auth/login}" method="post">
     <div>
         <label for="username">Username: </label>
         <input type="text" id="username" name="username" />
@@ -20,10 +20,10 @@
     </div>
 </form>
 <div>
-    <a href="/register">Zarejestruj się</a>
+    <a href="/auth/register">Zarejestruj się</a>
 </div>
 <div>
-    <a href="/request-reset-password">Zapomniałeś hasła?</a>
+    <a href="/auth/request-reset-password">Zapomniałeś hasła?</a>
 </div>
 </body>
 </html>

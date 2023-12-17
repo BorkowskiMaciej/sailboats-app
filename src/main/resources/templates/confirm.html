@@ -5,7 +5,7 @@
 </head>
 <body>
 <h1>Potwierdź swój kod</h1>
-<form th:action="@{/confirm}" method="post">
+<form th:action="@{/auth/confirm}" method="post">
   <div>
     <label for="confirmationCode">Kod potwierdzający:</label>
     <input type="text" id="confirmationCode" name="confirmationCode" required />

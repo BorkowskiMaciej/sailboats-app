@@ -3,6 +3,7 @@ package com.example.sailboatsapp.security;
 import com.example.sailboatsapp.domain.user.model.AppUser;
 import com.example.sailboatsapp.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

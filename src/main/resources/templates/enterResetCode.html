@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Wprowadź kod resetowania hasła</h1>
-<form th:action="@{/reset-password}" method="post">
+<form th:action="@{/auth/reset-password}" method="post">
   <div>
     <label for="resetCode">Kod resetowania:</label>
     <input type="text" id="resetCode" name="resetCode" required />

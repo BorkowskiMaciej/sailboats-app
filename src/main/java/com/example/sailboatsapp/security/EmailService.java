@@ -19,21 +19,21 @@ public class EmailService {
     }
 
     public void sendConfirmationCode(String to, String code) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(senderEmailAddress);
-        message.setTo(to);
-        message.setSubject("[Sailboats] Potwierdzenie rejestracji");
-        message.setText("Twój kod potwierdzający to: " + code);
-        emailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setFrom(senderEmailAddress);
+//        message.setTo(to);
+//        message.setSubject("[Sailboats] Potwierdzenie rejestracji");
+//        message.setText("Twój kod potwierdzający to: " + code);
+//        emailSender.send(message);
     }
 
     public void sendResetPasswordCode(String to, String code) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(senderEmailAddress);
-        message.setTo(to);
-        message.setSubject("[Sailboats] Kod resetowania hasła");
-        message.setText( "Twój kod resetowania hasła to: " + code);
-        emailSender.send(message);
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setFrom(senderEmailAddress);
+//        message.setTo(to);
+//        message.setSubject("[Sailboats] Kod resetowania hasła");
+//        message.setText( "Twój kod resetowania hasła to: " + code);
+//        emailSender.send(message);
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.sailboatsapp.application;
 import com.example.sailboatsapp.domain.user.UserFacade;
 import com.example.sailboatsapp.domain.user.model.AppUser;
 import com.example.sailboatsapp.security.LoginService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/auth")
 @Slf4j
 public class RegistrationController {
 
@@ -27,7 +30,7 @@ public class RegistrationController {
     @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
-            model.addAttribute("loginError", "Błędna nazwa użytkownika lub hasło.");
+            model.addAttribute("loginError", "Błędne dane logowania lub niezweryfikowane konto.");
         }
         return "login";
     }
@@ -68,15 +71,15 @@ public class RegistrationController {
         }
         if (!bindingResult.hasErrors()) {
             loginService.register(appUser);
-            return "redirect:/confirm";
+            return "redirect:/auth/confirm";
         }
 
         return "register";
     }
 
     @PostMapping("/confirm")
-    public String confirmRegistration(@
-            RequestParam("confirmationCode") String confirmationCode,
+    public String confirmRegistration(
+            @RequestParam("confirmationCode") String confirmationCode,
             Model model) {
 
         Optional<AppUser> user = userFacade.findByConfirmationCode(confirmationCode);
@@ -95,9 +98,9 @@ public class RegistrationController {
             @RequestParam("email") String email,
             Model model) {
 
-        Optional<AppUser> userOptional = userFacade.findByEmail(email);
-        if (userOptional.isPresent()) {
-            loginService.requestPasswordReset(userOptional.get());
+        Optional<AppUser> user = userFacade.findByEmail(email);
+        if (user.isPresent()) {
+            loginService.requestPasswordReset(user.get());
             model.addAttribute("message", "Kod resetowania hasła został wysłany na Twój adres e-mail.");
             return "enterResetCode";
         } else {
@@ -119,9 +122,9 @@ public class RegistrationController {
             return "enterResetCode";
         }
 
-        Optional<AppUser> userOptional = userFacade.findByResetPasswordCode(resetCode);
-        if (userOptional.isPresent()) {
-            loginService.resetPassword(userOptional.get().getUsername(), newPassword);
+        Optional<AppUser> user = userFacade.findByResetPasswordCode(resetCode);
+        if (user.isPresent()) {
+            loginService.resetPassword(user.get().getUsername(), newPassword);
             model.addAttribute("message", "Twoje hasło zostało zresetowane.");
             return "login";
         } else {
