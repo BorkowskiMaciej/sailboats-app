@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista ofert</title>
+</head>
+<body>
+<h1>Lista ofert</h1>
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Nazwa łodzi</th>
+    <th>Typ</th>
+    <th>Model</th>
+    <th>Port</th>
+    <th>Cena</th>
+    <th>Kaucja</th>
+    <th>Data rozpoczęcia</th>
+    <th>Data zakończenia</th>
+    <th>Opis</th>
+    <th>Właściciel</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="offer : ${offers}">
+    <td th:text="${offer.id}"></td>
+    <td th:text="${offer.boat.name}"></td>
+    <td th:text="${offer.boat.type}"></td>
+    <td th:text="${offer.boat.model}"></td>
+    <td th:text="${offer.port}"></td>
+    <td th:text="${offer.price}"></td>
+    <td th:text="${offer.deposit}"></td>
+    <td th:text="${offer.startDate}"></td>
+    <td th:text="${offer.endDate}"></td>
+    <td th:text="${offer.description}"></td>
+    <td th:text="${offer.owner.username}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

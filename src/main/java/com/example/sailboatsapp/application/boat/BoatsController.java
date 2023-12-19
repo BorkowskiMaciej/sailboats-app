@@ -1,6 +1,6 @@
 package com.example.sailboatsapp.application.boat;
 
-import com.example.sailboatsapp.domain.boat.BoatFacade;
+import com.example.sailboatsapp.domain.boat.BoatService;
 import com.example.sailboatsapp.domain.boat.model.Boat;
 import com.example.sailboatsapp.domain.user.UserService;
 import jakarta.validation.Valid;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Collection;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/boats")
-public class BoatController {
+public class BoatsController {
 
-    private final BoatFacade boatFacade;
+    private final BoatService boatService;
     private final UserService userService;
 
     @GetMapping("/add")
@@ -34,13 +34,13 @@ public class BoatController {
             return "boats/addBoatForm";
         }
         boat.setOwnerId(userService.getAuthenticatedUserId());
-        boatFacade.addBoat(boat);
+        boatService.addBoat(boat);
         return "redirect:/boats/list";
     }
 
     @GetMapping("/list")
     public String listBoats(Model model) {
-        Collection<Boat> boats = boatFacade.findAllByOwnerId(userService.getAuthenticatedUserId());
+        List<Boat> boats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
         model.addAttribute("boats", boats);
         return "boats/boatsList";
     }

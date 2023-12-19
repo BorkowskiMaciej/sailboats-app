@@ -3,13 +3,14 @@ package com.example.sailboatsapp.domain.boat;
 import com.example.sailboatsapp.domain.boat.model.Boat;
 import com.example.sailboatsapp.domain.boat.repository.BoatRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class BoatFacade {
+public class BoatService {
 
     private final BoatRepository boatRepository;
 
@@ -17,14 +18,12 @@ public class BoatFacade {
         boatRepository.save(boat);
     }
 
-    public Collection<Boat> findAll() {
-        return boatRepository.findAll();
-    }
-
-    public Collection<Boat> findAllByOwnerId(Long ownerId) {
+    public List<Boat> findAllByOwnerId(Long ownerId) {
         return boatRepository.findAllByOwnerId(ownerId);
     }
 
-
+    public Boat findById(Long boatId) {
+        return boatRepository.findById(boatId).orElseThrow();
+    }
 
 }
