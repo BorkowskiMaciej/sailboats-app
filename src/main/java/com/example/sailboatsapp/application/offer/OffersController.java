@@ -11,10 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -43,6 +40,17 @@ public class OffersController {
         model.addAttribute("offers", offers);
         return "offers/list";
     }
+
+    @GetMapping("/{offerId}")
+    public String showOfferDetails(@PathVariable Long offerId, Model model) {
+        Offer offer = offerService.findWithUserAndBoat(offerId);
+        if (offer == null) {
+            return "redirect:/offers";
+        }
+        model.addAttribute("offer", offer);
+        return "offers/detail";
+    }
+
     @PostMapping("/new")
     public String createNewOffer(@ModelAttribute("offer") @Valid Offer offer,
             BindingResult bindingResult,

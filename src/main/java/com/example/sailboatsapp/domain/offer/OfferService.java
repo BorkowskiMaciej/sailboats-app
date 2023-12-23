@@ -29,4 +29,12 @@ public class OfferService {
                 }).toList();
     }
 
+    public Offer findWithUserAndBoat(Long offerId) {
+        return offerRepository.findById(offerId)
+                .map(offer -> {
+                    offer.setBoat(boatService.findById(offer.getBoatId()));
+                    offer.setOwner(userService.findById(offer.getOwnerId()));
+                    return offer;
+                }).orElse(null);
+    }
 }

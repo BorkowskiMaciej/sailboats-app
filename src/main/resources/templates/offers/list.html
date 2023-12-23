@@ -35,6 +35,11 @@
     <td th:text="${offer.endDate}"></td>
     <td th:text="${offer.description}"></td>
     <td th:text="${offer.owner.username}"></td>
+    <td>
+      <a th:href="@{/offers/{id}(id=${offer.id})}">
+        <button type="button">Zobacz ofertę</button>
+      </a>
+    </td>
   </tr>
   </tbody>
 </table>

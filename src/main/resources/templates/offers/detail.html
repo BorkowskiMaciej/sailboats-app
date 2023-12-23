@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Szczegóły oferty</title>
+</head>
+<body>
+<h1>Szczegóły oferty</h1>
+<div>
+  <h2>Informacje o ofercie</h2>
+  <p><b>ID:</b> <span th:text="${offer.id}"></span></p>
+  <p><b>Nazwa łodzi:</b> <span th:text="${offer.boat.name}"></span></p>
+  <p><b>Typ łodzi:</b> <span th:text="${offer.boat.type}"></span></p>
+  <p><b>Model łodzi:</b> <span th:text="${offer.boat.model}"></span></p>
+  <p><b>Port:</b> <span th:text="${offer.port}"></span></p>
+  <p><b>Cena:</b> <span th:text="${offer.price}"></span></p>
+  <p><b>Kaucja:</b> <span th:text="${offer.deposit}"></span></p>
+  <p><b>Data rozpoczęcia:</b> <span th:text="${offer.startDate}"></span></p>
+  <p><b>Data zakończenia:</b> <span th:text="${offer.endDate}"></span></p>
+  <p><b>Opis:</b> <span th:text="${offer.description}"></span></p>
+  <p><b>Właściciel:</b> <span th:text="${offer.owner.username}"></span></p>
+</div>
+<form th:action="@{/reservations/new/{id}(id=${offer.id})}" method="post">
+  <input type="submit" value="Zarezerwuj" />
+</form>
+<a href="/offers">Powrót do listy ofert</a>
+</body>
+</html>

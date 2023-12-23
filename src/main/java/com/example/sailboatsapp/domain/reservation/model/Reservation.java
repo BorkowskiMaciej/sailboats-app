@@ -17,11 +17,16 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "offer_id")
+    @Column(name = "offer_id")
+    private Long offerId;
+
+    @Column(name = "tenant_id")
+    private Long tenantId;
+
+    @Transient
     private Offer offer;
 
-    @ManyToOne
-    @JoinColumn(name = "tenant_id")
+    @Transient
     private AppUser tenant;
+
 }
