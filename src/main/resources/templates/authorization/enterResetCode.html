@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
     <title>Wprowadź kod resetowania</title>
     <script type="text/javascript">
@@ -33,6 +33,7 @@
     </script>
 </head>
 <body>
+<section layout:fragment="content">
 <h1>Wprowadź kod resetowania hasła</h1>
 <form th:action="@{/auth/reset-password}" method="post" onsubmit="return validatePassword()">
     <div>
@@ -55,6 +56,7 @@
 <div th:if="${error}" th:text="${error}" style="color: red;"></div>
 
 <div th:if="${message}" th:text="${message}" style="color: green;"></div>
+</section>
 </body>
 </html>
 

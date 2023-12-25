@@ -34,11 +34,11 @@ public class ReservationsController {
         return "reservations/list";
     }
 
-//    @GetMapping("/hosted")
-//    public String showLandlordsReservations(Model model) {
-//        List<Reservation> reservations = reservationService.findAllLandlordId(userService.getAuthenticatedUserId());
-//        model.addAttribute("reservations", reservations);
-//        return "reservations/list";
-//    }
+    @GetMapping("/hosted")
+    public String showLandlordsReservations(Model model) {
+        List<Reservation> reservations = reservationService.findAllLandlordId(userService.getAuthenticatedUserId());
+        model.addAttribute("reservations", reservations);
+        return "reservations/list";
+    }
 
 }

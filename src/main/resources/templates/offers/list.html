@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
   <title>Lista ofert</title>
 </head>
 <body>
+<section layout:fragment="content">
 <h1>Lista ofert</h1>
 <table>
   <thead>
@@ -43,5 +45,6 @@
   </tr>
   </tbody>
 </table>
+</section>
 </body>
 </html>

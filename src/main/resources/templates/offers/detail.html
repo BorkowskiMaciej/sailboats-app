@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml"  lang="pl">
 <head>
   <meta charset="UTF-8">
   <title>Szczegóły oferty</title>
 </head>
 <body>
+<section layout:fragment="content">
 <h1>Szczegóły oferty</h1>
 <div>
   <h2>Informacje o ofercie</h2>
@@ -24,5 +25,6 @@
   <input type="submit" value="Zarezerwuj" />
 </form>
 <a href="/offers">Powrót do listy ofert</a>
+</section>
 </body>
 </html>

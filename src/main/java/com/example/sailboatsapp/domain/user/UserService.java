@@ -65,4 +65,8 @@ public class UserService {
         return userRepository.findById(ownerId).orElseThrow();
     }
 
+    public AppUser findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow();
+    }
+
 }

@@ -50,7 +50,8 @@ CREATE TABLE IF NOT EXISTS offer
 
 CREATE TABLE IF NOT EXISTS reservation
 (
-    id        SERIAL PRIMARY KEY,
-    offer_id  INTEGER REFERENCES offer (id),
-    tenant_id INTEGER REFERENCES "app_user" (id)
+    id          SERIAL PRIMARY KEY,
+    offer_id    INTEGER REFERENCES offer (id),
+    landlord_id INTEGER REFERENCES "app_user" (id),
+    tenant_id   INTEGER REFERENCES "app_user" (id)
 );

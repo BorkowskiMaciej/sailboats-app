@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml"  lang="pl">
 <head>
     <title>Dodaj nową łódź</title>
 </head>
 <body>
+<section layout:fragment="content">
 <h1>Rejestracja nowej łodzi</h1>
 <form th:action="@{/boats/add}" th:object="${boat}" method="post">
     <div>
@@ -54,5 +55,6 @@
         <input type="submit" value="Zarejestruj łódź" />
     </div>
 </form>
+</section>
 </body>
 </html>

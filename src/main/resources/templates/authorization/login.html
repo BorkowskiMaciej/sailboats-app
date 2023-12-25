@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
     <title>Login</title>
 </head>
 <body>
+<section layout:fragment="content">
 <h1>Login</h1>
 <form th:action="@{/auth/login}" method="post">
     <div>
@@ -25,5 +26,6 @@
 <div>
     <a href="/auth/request-reset-password">Zapomniałeś hasła?</a>
 </div>
+</section>
 </body>
 </html>

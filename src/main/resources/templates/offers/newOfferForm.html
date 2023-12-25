@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
   <meta charset="UTF-8">
   <title>Utwórz nową ofertę</title>
@@ -17,6 +17,7 @@
   </script>
 </head>
 <body>
+<section layout:fragment="content">
 <h1>Dodaj ofertę</h1>
 <form th:action="@{/offers/new}" th:object="${offer}" method="post" onsubmit="return validateDates()">
   <div>
@@ -60,5 +61,6 @@
     <input type="submit" value="Dodaj ofertę" />
   </div>
 </form>
+</section>
 </body>
 </html>

@@ -23,10 +23,16 @@ public class Reservation {
     @Column(name = "tenant_id")
     private Long tenantId;
 
+    @Column(name = "landlord_id")
+    private Long landlordId;
+
     @Transient
     private Offer offer;
 
     @Transient
     private AppUser tenant;
+
+    @Transient
+    private AppUser landlord;
 
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Edycja danych użytkownika</title>
+</head>
+<body>
+<section layout:fragment="content" class="offers-section">
+<div class="container">
+    <h2>Edycja danych użytkownika</h2>
+    <form th:action="@{/account/update}" th:object="${user}" method="post">
+        <div class="form-group">
+            <label for="name">Imię:</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="surname">Nazwisko:</label>
+            <input type="text" id="surname" th:field="*{surname}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Numer telefonu:</label>
+            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="isCompany">Czy firma:</label>
+            <select id="isCompany" th:field="*{isCompany}" class="form-control">
+                <option value="true">Tak</option>
+                <option value="false">Nie</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="companyName">Nazwa firmy:</label>
+            <input type="text" id="companyName" th:field="*{companyName}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="tin">NIP:</label>
+            <input type="text" id="tin" th:field="*{tin}" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="address">Adres:</label>
+            <input type="text" id="address" th:field="*{address}" class="form-control"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+    </form>
+</div>
+</section>
+</body>
+</html>

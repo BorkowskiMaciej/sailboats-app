@@ -22,6 +22,13 @@ public class BoatsController {
     private final BoatService boatService;
     private final UserService userService;
 
+    @GetMapping()
+    public String listBoats(Model model) {
+        List<Boat> boats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
+        model.addAttribute("boats", boats);
+        return "boats/boatsList";
+    }
+
     @GetMapping("/add")
     public String showAddBoatForm(Model model) {
         model.addAttribute("boat", new Boat());
@@ -37,12 +44,4 @@ public class BoatsController {
         boatService.addBoat(boat);
         return "redirect:/boats/list";
     }
-
-    @GetMapping("/list")
-    public String listBoats(Model model) {
-        List<Boat> boats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
-        model.addAttribute("boats", boats);
-        return "boats/boatsList";
-    }
-
 }

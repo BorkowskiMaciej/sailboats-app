@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml"  lang="pl">
 <head>
   <title>Potwierdzenie rejestracji</title>
 </head>
 <body>
+<section layout:fragment="content">
 <h1>Potwierdź swój kod</h1>
 <form th:action="@{/auth/confirm}" method="post">
   <div>
@@ -15,5 +16,6 @@
   </div>
 </form>
 <div th:if="${message}" th:text="${message}"></div>
+</section>
 </body>
 </html>

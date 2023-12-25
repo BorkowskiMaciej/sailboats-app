@@ -20,6 +20,7 @@ public class ReservationService {
     public void createReservation(Long offerId, Long tenantId) {
         Reservation reservation = Reservation.builder()
                 .offerId(offerId)
+                .landlordId(offerService.findWithUserAndBoat(offerId).getOwnerId())
                 .tenantId(tenantId)
                 .build();
         reservationRepository.save(reservation);
@@ -31,19 +32,20 @@ public class ReservationService {
                 .map(reservation -> reservation.toBuilder()
                         .offer(offerService.findWithUserAndBoat(reservation.getOfferId()))
                         .tenant(userService.findById(reservation.getTenantId()))
+                        .landlord(userService.findById(reservation.getLandlordId()))
                         .build())
                 .toList();
     }
 
-//    public List<Reservation> findAllLandlordId(Long landlordId) {
-//        return reservationRepository.findAllByLandlordId(landlordId)
-//                .stream()
-//                .map(reservation -> reservation.toBuilder()
-//                        .offer(offerService.findWithUserAndBoat(reservation.getOfferId()))
-//                        .landlord(userService.findById(reservation.getLandlordId()))
-//                        .tenant(userService.findById(reservation.getTenantId()))
-//                        .build())
-//                .toList();
-//    }
+    public List<Reservation> findAllLandlordId(Long landlordId) {
+        return reservationRepository.findAllByLandlordId(landlordId)
+                .stream()
+                .map(reservation -> reservation.toBuilder()
+                        .offer(offerService.findWithUserAndBoat(reservation.getOfferId()))
+                        .landlord(userService.findById(reservation.getLandlordId()))
+                        .tenant(userService.findById(reservation.getTenantId()))
+                        .build())
+                .toList();
+    }
 
 }

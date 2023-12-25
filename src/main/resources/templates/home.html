@@ -1,15 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pl" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Home</title>
+    <meta charset="UTF-8">
+    <title>Czarter Jachtów</title>
 </head>
 <body>
-<h1>Witamy na stronie głównej</h1>
-<div>
-    <a href="/auth/login">Zaloguj się</a>
-</div>
-<div>
-    <a href="boats/list">Zobacz listę łodzi</a>
-</div>
+<main>
+    <section layout:fragment="content" class="offers-section">
+        <section class="search-section">
+            <h1>Najtańsze czartery! Rezerwuj bezpiecznie online!</h1>
+        </section>
+        <h2>Dostępne oferty</h2>
+        <div th:each="offer : ${offers}" class="offer">
+            <h3 th:text="${offer.boat.name}">Nazwa Jachtu</h3>
+            <p th:text="${offer.description}">Opis oferty...</p>
+            <p>Cena: <span th:text="${offer.price}">Cena</span></p>
+            <a th:href="@{/offers/{id}(id=${offer.id})}">
+                <button type="button">Zobacz ofertę</button>
+            </a>
+        </div>
+    </section>
+</main>
 </body>
 </html>

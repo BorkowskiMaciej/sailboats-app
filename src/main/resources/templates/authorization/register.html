@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
     <title>Registration</title>
     <script>
@@ -38,6 +38,7 @@
     </script>
 </head>
 <body onload="toggleCompanyFields()">
+<section layout:fragment="content">
 <h1>Register</h1>
 <form th:action="@{/auth/register}" th:object="${appUser}" method="post" onsubmit="return validatePassword()">
     <div>
@@ -110,5 +111,6 @@
         <input type="submit" value="Register" />
     </div>
 </form>
+</section>
 </body>
 </html>

@@ -19,7 +19,8 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/auth/*").permitAll()
+                        .requestMatchers("/","/auth/*", "/style.css", "/css/**", "/js/**", "/images/**",
+                                "/offers").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/auth/login")
@@ -29,7 +30,8 @@ public class WebSecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
-                        .deleteCookies("JSESSIONID"));
+                        .deleteCookies("JSESSIONID"))
+                .csrf().disable();
         return http.build();
     }
 
