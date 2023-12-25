@@ -1,10 +1,24 @@
-/* styles.css */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    display: flex; /* Ustawienie flexbox dla elementu body */
+    flex-direction: column; /* Ustawienie kierunku flexbox na pionowy */
+    flex: 1 0 auto;
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex-grow: 1; /* Pozwoli na wypełnienie dostępnym miejscem między nagłówkiem a stopką */
+}
+
 
 header {
     background-color: #f4f4f4;
@@ -49,7 +63,6 @@ footer {
     color: white;
     text-align: center;
     padding: 10px 0;
-    position: absolute;
     bottom: 0;
     width: 100%;
 }

@@ -3,46 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <title>Edycja danych użytkownika</title>
+    <script>
+        function confirmAccountDeletion() {
+            if (confirm("Czy na pewno chcesz usunąć swoje konto?")) {
+                window.location.href = '/account/delete';
+            }
+        }
+        function toggleCompanyFields() {
+            var isCompanySelected = document.getElementById("isCompany").value === 'true';
+            document.getElementById("companyFields").style.display = isCompanySelected ? "block" : "none";
+        }
+
+        function validateForm() {
+            var name = document.getElementById("name").value.trim();
+            var surname = document.getElementById("surname").value.trim();
+            var phoneNumber = document.getElementById("phoneNumber").value;
+            var isCompany = document.getElementById("isCompany").value === 'true';
+            var companyName = document.getElementById("companyName").value.trim();
+            var tin = document.getElementById("tin").value.trim();
+            var address = document.getElementById("address").value.trim();
+
+            var phoneNumberRegex = /^\d{9}$/;
+            var isEmptyOrWhitespace = str => !str || str.length === 0 || /^\s*$/.test(str);
+
+            if (isEmptyOrWhitespace(name) || isEmptyOrWhitespace(surname)) {
+                alert("Imię i nazwisko nie mogą być puste ani zawierać samych białych znaków.");
+                return false;
+            }
+
+            if (!phoneNumberRegex.test(phoneNumber)) {
+                alert("Numer telefonu musi składać się z 9 cyfr.");
+                return false;
+            }
+
+            if (isCompany) {
+                if (isEmptyOrWhitespace(companyName) || isEmptyOrWhitespace(tin) || isEmptyOrWhitespace(address)) {
+                    alert("Nazwa firmy, NIP i adres nie mogą być puste ani zawierać samych białych znaków.");
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        window.onload = function() {
+            var successAlert = document.getElementById("successAlert");
+            if (successAlert) {
+                setTimeout(function() {
+                    successAlert.style.display = 'none';
+                }, 3000);
+            }
+            toggleCompanyFields();
+            document.getElementById("userForm").onsubmit = validateForm;
+        };
+    </script>
 </head>
 <body>
-<section layout:fragment="content" class="offers-section">
-<div class="container">
-    <h2>Edycja danych użytkownika</h2>
-    <form th:action="@{/account/update}" th:object="${user}" method="post">
-        <div class="form-group">
-            <label for="name">Imię:</label>
-            <input type="text" id="name" th:field="*{name}" class="form-control"/>
+<main>
+    <section layout:fragment="content" class="offers-section">
+        <h2>Dane użytkownika</h2>
+        <div th:if="${successMessage}" class="alert alert-success" id="successAlert">
+            <p th:text="${successMessage}"></p>
         </div>
-        <div class="form-group">
-            <label for="surname">Nazwisko:</label>
-            <input type="text" id="surname" th:field="*{surname}" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="phoneNumber">Numer telefonu:</label>
-            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="isCompany">Czy firma:</label>
-            <select id="isCompany" th:field="*{isCompany}" class="form-control">
-                <option value="true">Tak</option>
-                <option value="false">Nie</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="companyName">Nazwa firmy:</label>
-            <input type="text" id="companyName" th:field="*{companyName}" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="tin">NIP:</label>
-            <input type="text" id="tin" th:field="*{tin}" class="form-control"/>
-        </div>
-        <div class="form-group">
-            <label for="address">Adres:</label>
-            <input type="text" id="address" th:field="*{address}" class="form-control"/>
-        </div>
-        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-    </form>
-</div>
-</section>
+        <form id="userForm" th:action="@{/account/update}" th:object="${user}" method="post">
+            <div class="form-group">
+                <label for="username">Nazwa użytkownika:</label>
+                <input type="text" id="username" th:field="*{username}" class="form-control" readonly/>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="text" id="email" th:field="*{email}" class="form-control" readonly/>
+            </div>
+            <div class="form-group">
+                <label for="name">Imię:</label>
+                <input type="text" id="name" th:field="*{name}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="surname">Nazwisko:</label>
+                <input type="text" id="surname" th:field="*{surname}" class="form-control"/>
+
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Numer telefonu:</label>
+                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <label for="isCompany">Czy firma:</label>
+                <select id="isCompany" th:field="*{isCompany}" class="form-control" onchange="toggleCompanyFields()">
+                    <option value="true">Tak</option>
+                    <option value="false">Nie</option>
+                </select>
+            </div>
+
+            <div id="companyFields" style="display: none;">
+                <div class="form-group">
+                    <label for="companyName">Nazwa firmy:</label>
+                    <input type="text" id="companyName" th:field="*{companyName}" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="tin">NIP:</label>
+                    <input type="text" id="tin" th:field="*{tin}" class="form-control"/>
+                </div>
+                <div class="form-group">
+                    <label for="address">Adres:</label>
+                    <input type="text" id="address" th:field="*{address}" class="form-control"/>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+            <a href="account/change-password" class="btn btn-secondary">Zmień hasło</a>
+            <button type="button" class="btn btn-danger" onclick="confirmAccountDeletion()">Usuń konto</button>
+        </form>
+    </section>
+</main>
 </body>
 </html>

@@ -31,15 +31,15 @@ CREATE TABLE IF NOT EXISTS boat
     cabins_number INTEGER                            NOT NULL,
     prod_year     INTEGER                            NOT NULL,
     engine_power  INTEGER                            NOT NULL,
-    owner_id      INTEGER REFERENCES "app_user" (id) NOT NULL
+    owner_id      INTEGER REFERENCES "app_user" (id) ON DELETE CASCADE NOT NULL
 
 );
 
 CREATE TABLE IF NOT EXISTS offer
 (
     id          SERIAL PRIMARY KEY,
-    boat_id     INTEGER REFERENCES boat (id),
-    owner_id    INTEGER REFERENCES "app_user" (id),
+    boat_id     INTEGER REFERENCES boat (id) ON DELETE CASCADE,
+    owner_id    INTEGER REFERENCES "app_user" (id) ON DELETE CASCADE,
     port        VARCHAR(255) NOT NULL,
     price       INTEGER      NOT NULL,
     deposit     INTEGER      NOT NULL,
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS offer
 CREATE TABLE IF NOT EXISTS reservation
 (
     id          SERIAL PRIMARY KEY,
-    offer_id    INTEGER REFERENCES offer (id),
-    landlord_id INTEGER REFERENCES "app_user" (id),
-    tenant_id   INTEGER REFERENCES "app_user" (id)
+    offer_id    INTEGER REFERENCES offer (id) ON DELETE CASCADE,
+    landlord_id INTEGER REFERENCES "app_user" (id) ON DELETE CASCADE,
+    tenant_id   INTEGER REFERENCES "app_user" (id) ON DELETE CASCADE
 );

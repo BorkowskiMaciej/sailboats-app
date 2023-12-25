@@ -2,12 +2,17 @@ package com.example.sailboatsapp.application;
 
 import com.example.sailboatsapp.domain.user.UserService;
 import com.example.sailboatsapp.domain.user.model.AppUser;
+import com.example.sailboatsapp.security.LoginService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/account")
@@ -15,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class UserController {
 
     private final UserService userService;
+    private final LoginService loginService;
 
     @GetMapping
     public String showAccount(Model model, @AuthenticationPrincipal UserDetails currentUser) {
@@ -23,9 +29,33 @@ public class UserController {
         return "user/account";
     }
 
-//    @PatchMapping("/update")
-//    public String updateAccount(AppUser user) {
-//        userService.updateUser(user);
-//        return "redirect:/account";
-//    }
+    @PostMapping("/update")
+    public String updateAccount(@Valid AppUser user, RedirectAttributes redirectAttributes) {
+        userService.updateUser(user);
+        redirectAttributes.addFlashAttribute("successMessage", "Dane zostały pomyślnie zaktualizowane.");
+        return "redirect:/account";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(
+            @RequestParam("newPassword") String newPassword,
+            Principal principal,
+            RedirectAttributes redirectAttributes) {
+        String username = principal.getName();
+        loginService.resetPassword(username, newPassword);
+        redirectAttributes.addFlashAttribute("successMessage", "Hasło zostało pomyślnie zaktualizowane.");
+        return "redirect:/account";
+    }
+
+    @GetMapping("/change-password")
+    public String changePassword() {
+        return "user/changePassword";
+    }
+
+    @GetMapping("/delete")
+    public String deleteAccount(Principal principal) {
+        String username = principal.getName();
+        userService.deleteUser(username);
+        return "redirect:/logout";
+    }
 }

@@ -42,6 +42,8 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
     Optional<AppUser> findByResetPasswordCode(String resetCode);
 
-
+    @Modifying
+    @Transactional
+    void deleteByUsername(String username);
 
 }

@@ -2,6 +2,7 @@ package com.example.sailboatsapp.domain.user;
 
 import com.example.sailboatsapp.domain.user.model.AppUser;
 import com.example.sailboatsapp.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -67,6 +68,26 @@ public class UserService {
 
     public AppUser findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow();
+    }
+
+    @Transactional
+    public void updateUser(AppUser updatedUser) {
+        AppUser existingUser = userRepository.findById(getAuthenticatedUserId())
+                .orElseThrow();
+
+        existingUser.setName(updatedUser.getName());
+        existingUser.setSurname(updatedUser.getSurname());
+        existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
+        existingUser.setIsCompany(updatedUser.getIsCompany());
+        existingUser.setCompanyName(updatedUser.getCompanyName());
+        existingUser.setTin(updatedUser.getTin());
+        existingUser.setAddress(updatedUser.getAddress());
+
+        userRepository.save(existingUser);
+    }
+
+    public void deleteUser(String username) {
+        userRepository.deleteByUsername(username);
     }
 
 }
