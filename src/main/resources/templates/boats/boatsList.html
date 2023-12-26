@@ -2,39 +2,49 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml"  lang="pl">
 <head>
   <title>Lista łódek</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
 <section layout:fragment="content">
-<h1>Lista łódek</h1>
-<table>
-  <thead>
-  <tr>
-    <th>ID</th>
-    <th>Nazwa</th>
-    <th>Typ</th>
-    <th>Model</th>
-    <th>Liczba osób</th>
-    <th>Liczba kabin</th>
-    <th>Rok produkcji</th>
-    <th>Moc silnika</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="boat : ${boats}">
-    <td th:text="${boat.id}"></td>
-    <td th:text="${boat.name}"></td>
-    <td th:text="${boat.type}"></td>
-    <td th:text="${boat.model}"></td>
-    <td th:text="${boat.maxHeadcount}"></td>
-    <td th:text="${boat.cabinsNumber}"></td>
-    <td th:text="${boat.prodYear}"></td>
-    <td th:text="${boat.enginePower}"></td>
-  </tr>
-  </tbody>
-</table>
-<div>
-  <a th:href="@{/boats/add}" class="btn btn-primary">Dodaj nową łódkę</a>
-</div>
+  <h1>Lista łódek</h1>
+  <table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Nazwa</th>
+      <th>Typ</th>
+      <th>Model</th>
+      <th>Liczba osób</th>
+      <th>Liczba kabin</th>
+      <th>Rok produkcji</th>
+      <th>Moc silnika</th>
+      <th>Akcje</th> <!-- Dodatkowa kolumna dla akcji -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="boat : ${boats}">
+      <td th:text="${boat.id}"></td>
+      <td th:text="${boat.name}"></td>
+      <td th:text="${boat.type}"></td>
+      <td th:text="${boat.model}"></td>
+      <td th:text="${boat.maxHeadcount}"></td>
+      <td th:text="${boat.cabinsNumber}"></td>
+      <td th:text="${boat.prodYear}"></td>
+      <td th:text="${boat.enginePower}"></td>
+      <td>
+        <a th:href="@{/boats/edit/{id}(id=${boat.id})}" class="btn btn-sm btn-primary">Edytuj</a>
+        <a th:href="@{/boats/delete/{id}(id=${boat.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tę łódkę?')">Usuń</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <div>
+    <a th:href="@{/boats/add}" class="btn btn-success">Dodaj nową łódkę</a>
+  </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
 </html>

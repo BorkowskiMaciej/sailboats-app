@@ -51,7 +51,7 @@
             if (successAlert) {
                 setTimeout(function() {
                     successAlert.style.display = 'none';
-                }, 3000);
+                }, 5000);
             }
             toggleCompanyFields();
             document.getElementById("userForm").onsubmit = validateForm;
@@ -62,9 +62,7 @@
 <main>
     <section layout:fragment="content" class="offers-section">
         <h2>Dane użytkownika</h2>
-        <div th:if="${successMessage}" class="alert alert-success" id="successAlert">
-            <p th:text="${successMessage}"></p>
-        </div>
+        <div th:if="${successMessage}" class="alert alert-success" id="successAlert" th:text="${successMessage}"></div>
         <form id="userForm" th:action="@{/account/update}" th:object="${user}" method="post">
             <div class="form-group">
                 <label for="username">Nazwa użytkownika:</label>

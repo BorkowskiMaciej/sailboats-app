@@ -1,21 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml"  lang="pl">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
   <title>Potwierdzenie rejestracji</title>
+  <script>
+    window.onload = function() {
+      var errorAlert = document.getElementById("errorAlert");
+      if (errorAlert) {
+        setTimeout(function() {
+          errorAlert.style.display = 'none';
+        }, 5000);
+      }
+    };
+  </script>
 </head>
 <body>
-<section layout:fragment="content">
-<h1>Potwierdź swój kod</h1>
-<form th:action="@{/auth/confirm}" method="post">
-  <div>
-    <label for="confirmationCode">Kod potwierdzający:</label>
-    <input type="text" id="confirmationCode" name="confirmationCode" required />
-  </div>
-  <div>
-    <input type="submit" value="Potwierdź" />
-  </div>
-</form>
-<div th:if="${message}" th:text="${message}"></div>
+<section layout:fragment="content" class="offers-section">
+  <h2>Aktywuj konto</h2>
+  <form th:action="@{/auth/confirm}" method="post" class="offers-section">
+    <div th:if="${message}" id="successAlert" class="alert alert-success" th:text="${message}"></div>
+    <div class="form-group">
+      <label for="confirmationCode">Kod aktywujący:</label>
+      <input type="text" id="confirmationCode" name="confirmationCode" class="form-control" required />
+    </div>
+    <div th:if="${error}" id="errorAlert" class="alert alert-danger" th:text="${error}"></div>
+    <div>
+      <input type="submit" value="Potwierdź" class="btn btn-primary"/>
+    </div>
+  </form>
 </section>
 </body>
 </html>

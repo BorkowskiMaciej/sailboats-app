@@ -29,8 +29,12 @@ public class UserService {
         return userRepository.findByResetPasswordCode(resetCode);
     }
 
-    public boolean checkIfUserExists(String username) {
+    public boolean checkIfUsernameExists(String username) {
         return userRepository.existsByUsername(username);
+    }
+
+    public boolean checkIfEmailExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     public void register(AppUser user) {

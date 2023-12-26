@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -52,9 +53,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid AppUser appUser, BindingResult bindingResult) {
-        if (userService.checkIfUserExists(appUser.getUsername())) {
+    public String registerUser(@Valid AppUser appUser, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (userService.checkIfUsernameExists(appUser.getUsername())) {
             bindingResult.rejectValue("username", "error.user", "Konto z taką nazwą użytkownika już istnieje.");
+            return "authorization/register";
+        }
+        if (userService.checkIfEmailExists(appUser.getEmail())) {
+            bindingResult.rejectValue("email", "error.email", "Konto z takim adresem e-mail już istnieje.");
             return "authorization/register";
         }
         if (Boolean.TRUE.equals(appUser.getIsCompany())) {
@@ -70,6 +75,8 @@ public class AuthenticationController {
         }
         if (!bindingResult.hasErrors()) {
             loginService.register(appUser);
+            redirectAttributes.addFlashAttribute("message",
+                    "Pomyślnie zarejestrowano. W celu dokończenia rejestracji wprowadź kod wysłany na Twój adres e-mail.");
             return "redirect:/auth/confirm";
         }
 
@@ -85,9 +92,9 @@ public class AuthenticationController {
         if (user.isPresent()) {
             loginService.confirm(user.get().getUsername());
             model.addAttribute("message", "Konto zostało pomyślnie aktywowane.");
-            return "authorization/confirmSuccess";
+            return "authorization/login";
         } else {
-            model.addAttribute("message", "Nieprawidłowy kod potwierdzający.");
+            model.addAttribute("error", "Nieprawidłowy kod potwierdzający.");
             return "authorization/confirm";
         }
     }

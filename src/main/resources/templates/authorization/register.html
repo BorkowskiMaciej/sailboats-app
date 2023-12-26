@@ -3,10 +3,12 @@
 <head>
     <title>Registration</title>
     <script>
+        function goBack() {
+            window.history.back();
+        }
         function toggleCompanyFields() {
-            var checkBox = document.getElementById("isCompany");
-            var companyFields = document.getElementById("companyFields");
-            companyFields.style.display = checkBox.checked ? "block" : "none";
+            var isCompanySelected = document.getElementById("isCompany").value === 'true';
+            document.getElementById("companyFields").style.display = isCompanySelected ? "block" : "none";
         }
         document.addEventListener("DOMContentLoaded", function() {
             var password = document.getElementById("password");
@@ -38,79 +40,74 @@
     </script>
 </head>
 <body onload="toggleCompanyFields()">
-<section layout:fragment="content">
-<h1>Register</h1>
-<form th:action="@{/auth/register}" th:object="${appUser}" method="post" onsubmit="return validatePassword()">
-    <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" th:field="*{username}"
-               pattern="^[^\s]+$" title="Nazwa użytkownika nie może zawierać białych znaków." required />
-        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</div>
-    </div>
-
-    <div>
-        <label for="password">Password:</label>
-        <input type="password" id="password" th:field="*{password}" minlength="8" maxlength="30" required />
-        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
-    </div>
-    <div>
-        <label for="confirmPassword">Potwierdź hasło:</label>
-        <input type="password" id="confirmPassword" required />
-    </div>
-    <div id="validationMessage" style="color: red;"></div>
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" th:field="*{name}" />
-        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
-    </div>
-
-    <div>
-        <label for="surname">Surname:</label>
-        <input type="text" id="surname" th:field="*{surname}" />
-        <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">Surname Error</div>
-    </div>
-
-    <div>
-        <label for="phoneNumber">Phone Number:</label>
-        <input type="text" id="phoneNumber" th:field="*{phoneNumber}" />
-        <div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Phone Number Error</div>
-    </div>
-
-    <div>
-        <label for="email">Email:</label>
-        <input type="email" id="email" th:field="*{email}" />
-        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
-    </div>
-
-    <div>
-        <label for="isCompany">Is Company:</label>
-        <input type="checkbox" id="isCompany" th:field="*{isCompany}" onchange="toggleCompanyFields()"/>
-    </div>
-
-    <div id="companyFields" style="display:none;">
-        <div>
-            <label for="companyName">Company Name:</label>
-            <input type="text" id="companyName" th:field="*{companyName}" />
-            <div th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}">Company Name Error</div>
+<section layout:fragment="content" class="offers-section">
+    <h2>Zarejestruj się</h2>
+    <form th:action="@{/auth/register}" th:object="${appUser}" method="post" onsubmit="return validatePassword()" class="offers-section">
+        <div class="form-group">
+            <label for="username">Nazwa użytkownika:</label>
+            <input type="text" id="username" th:field="*{username}" class="form-control"
+                   pattern="^[^\s]+$" title="Nazwa użytkownika nie może zawierać białych znaków." required />
+            <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" th:errors="*{username}"></div>
         </div>
-
-        <div>
-            <label for="tin">TIN:</label>
-            <input type="text" id="tin" th:field="*{tin}" />
-            <div th:if="${#fields.hasErrors('tin')}" th:errors="*{tin}">TIN Error</div>
+        <div class="form-group">
+            <label for="email">Adres e-mail:</label>
+            <input type="email" id="email" th:field="*{email}" class="form-control" />
+            <div th:if="${#fields.hasErrors('email')}" class="alert alert-danger" th:errors="*{email}"></div>
         </div>
-
-        <div>
-            <label for="address">Address:</label>
-            <input type="text" id="address" th:field="*{address}" />
-            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</div>
+        <div class="form-group">
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" th:field="*{password}" class="form-control" minlength="8" maxlength="30" required />
+            <div th:if="${#fields.hasErrors('password')}" class="alert alert-danger" th:errors="*{password}"></div>
         </div>
-    </div>
-
-    <div>
-        <input type="submit" value="Register" />
-    </div>
-</form>
+        <div class="form-group">
+            <label for="confirmPassword">Potwierdź hasło:</label>
+            <input type="password" id="confirmPassword" class="form-control" required />
+            <div id="validationMessage" style="color: red;"></div>
+        </div>
+        <div class="form-group">
+            <label for="name">Imię:</label>
+            <input type="text" id="name" th:field="*{name}" class="form-control" />
+            <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></div>
+        </div>
+        <div class="form-group">
+            <label for="surname">Nazwisko:</label>
+            <input type="text" id="surname" th:field="*{surname}" class="form-control" />
+            <div th:if="${#fields.hasErrors('surname')}" class="alert alert-danger" th:errors="*{surname}"></div>
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">Numer telefonu:</label>
+            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
+            <div th:if="${#fields.hasErrors('phoneNumber')}" class="alert alert-danger" th:errors="*{phoneNumber}">Phone Number Error</div>
+        </div>
+        <div class="form-group">
+            <label for="isCompany">Czy firma:</label>
+            <select id="isCompany" th:field="*{isCompany}" class="form-control" onchange="toggleCompanyFields()">
+                <option value="false">Nie</option>
+                <option value="true">Tak</option>
+            </select>
+        </div>
+        <div id="companyFields" style="display:none;">
+            <div class="form-group">
+                <label for="companyName">Nazwa firmy:</label>
+                <input type="text" id="companyName" th:field="*{companyName}" class="form-control" />
+                <div th:if="${#fields.hasErrors('companyName')}" class="alert alert-danger" th:errors="*{companyName}"></div>
+            </div>
+            <div class="form-group">
+                <label for="tin">NIP:</label>
+                <input type="text" id="tin" th:field="*{tin}" class="form-control" />
+                <div th:if="${#fields.hasErrors('tin')}" class="alert alert-danger" th:errors="*{tin}"></div>
+            </div>
+            <div class="form-group">
+                <label for="address">Adres:</label>
+                <input type="text" id="address" th:field="*{address}" class="form-control" />
+                <div th:if="${#fields.hasErrors('address')}" class="alert alert-danger" th:errors="*{address}"></div>
+            </div>
+        </div>
+        <div>
+            <button type="button" onclick="goBack()" class="btn btn-secondary">Wróć</button>
+            <input type="submit" value="Zarejestruj się" class="btn btn-primary" />
+        </div>
+    </form>
 </section>
 </body>
 </html>

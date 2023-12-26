@@ -2,30 +2,37 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
     <title>Login</title>
+    <script>
+        window.onload = function() {
+            var errorAlert = document.getElementById("errorAlert");
+            if (errorAlert) {
+                setTimeout(function() {
+                    errorAlert.style.display = 'none';
+                }, 5000);
+            }
+        };
+    </script>
 </head>
 <body>
-<section layout:fragment="content">
-<h1>Login</h1>
-<form th:action="@{/auth/login}" method="post">
-    <div>
-        <label for="username">Username: </label>
-        <input type="text" id="username" name="username" />
-    </div>
-    <div>
-        <label for="password">Password: </label>
-        <input type="password" id="password" name="password" />
-    </div>
-    <div th:if="${loginError}" th:text="${loginError}"></div>
-    <div>
-        <input type="submit" value="Sign In" />
-    </div>
-</form>
-<div>
-    <a href="/auth/register">Zarejestruj się</a>
-</div>
-<div>
-    <a href="/auth/request-reset-password">Zapomniałeś hasła?</a>
-</div>
+<section layout:fragment="content" class="offers-section">
+    <h2>Zaloguj się</h2>
+    <form th:action="@{/auth/login}" method="post" class="offers-section">
+        <div th:if="${message}" class="alert alert-success" id="successAlert" th:text="${message}"></div>
+        <div class="form-group">
+            <label for="username">Nazwa użytkownika:</label>
+            <input type="text" id="username" name="username" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" name="password" class="form-control"/>
+        </div>
+        <div th:if="${loginError}" id="errorAlert" class="alert alert-danger" th:text="${loginError}"></div>
+        <div>
+            <input type="submit" value="Zaloguj się" class="btn btn-primary"/>
+            <a href="/auth/register" class="btn btn-secondary">Zarejestruj się</a>
+            <a href="/auth/request-reset-password" class="btn btn-secondary">Zresetuj hasło</a>
+        </div>
+    </form>
 </section>
 </body>
 </html>
