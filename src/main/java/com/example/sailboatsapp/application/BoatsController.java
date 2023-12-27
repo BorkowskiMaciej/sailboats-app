@@ -1,4 +1,4 @@
-package com.example.sailboatsapp.application.boat;
+package com.example.sailboatsapp.application;
 
 import com.example.sailboatsapp.domain.boat.BoatService;
 import com.example.sailboatsapp.domain.boat.model.Boat;
@@ -31,19 +31,23 @@ public class BoatsController {
     public String listBoats(Model model) {
         List<Boat> boats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
         model.addAttribute("boats", boats);
-        return "boats/boatsList";
+        return "boats/list";
     }
 
     @GetMapping("/add")
     public String showAddBoatForm(Model model) {
         model.addAttribute("boat", new Boat());
-        return "boats/addBoatForm";
+        return "boats/add";
     }
 
     @PostMapping("/add")
     public String addBoat(@Valid Boat boat, BindingResult result, @RequestParam("file") MultipartFile file) {
+        if(boatService.checkIfBoatExists(boat.getName())) {
+            result.rejectValue("name", "name", "Łódź o takiej nazwie już istnieje");
+            return "boats/add";
+        }
         if (result.hasErrors()) {
-            return "boats/addBoatForm";
+            return "boats/add";
         }
         if (!file.isEmpty()) {
             try {
@@ -51,7 +55,7 @@ public class BoatsController {
                 boat.setImageName(file.getOriginalFilename());
             } catch (IOException e) {
                 result.rejectValue("image", "image", "Wystąpił błąd z przetworzeniem zdjęcia");
-                return "boats/addBoatForm";
+                return "boats/add";
             }
         }
         boat.setOwnerId(userService.getAuthenticatedUserId());

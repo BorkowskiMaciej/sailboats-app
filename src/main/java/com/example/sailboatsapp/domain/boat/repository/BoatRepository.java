@@ -10,4 +10,6 @@ import java.util.List;
 public interface BoatRepository extends JpaRepository<Boat, Long> {
 
     List<Boat> findAllByOwnerId(Long ownerId);
+
+    boolean existsByName(String name);
 }

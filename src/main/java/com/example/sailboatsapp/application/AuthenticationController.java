@@ -37,19 +37,19 @@ public class AuthenticationController {
 
     @GetMapping("/register")
     public ModelAndView showRegistrationForm() {
-        ModelAndView mav = new ModelAndView("authorization/register");
+        ModelAndView mav = new ModelAndView("authentication/register");
         mav.addObject("appUser", new AppUser());
         return mav;
     }
 
     @GetMapping("/confirm")
     public String showConfirmationForm() {
-        return "authorization/confirm";
+        return "authentication/confirm";
     }
 
     @GetMapping("/request-reset-password")
     public String showResetPasswordRequestForm() {
-        return "authorization/resetPasswordRequest";
+        return "authentication/resetPasswordRequest";
     }
 
     @PostMapping("/register")

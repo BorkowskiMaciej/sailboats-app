@@ -30,13 +30,16 @@ public class Boat {
     @Length(max = 30, message = "Model nie może być dłuższy niż 30 znaków")
     private String model;
     @Min(value = 1, message = "Minimalna liczba osób to 1")
+    @Max(value = 100, message = "Maksymalna liczba osób to 100")
     private Integer maxHeadcount;
     @Min(value = 1, message = "Minimalna liczba kabin to 1")
+    @Max(value = 10, message = "Maksymalna liczba kabin to 10")
     private Integer cabinsNumber;
     @Min(value = 1900, message = "Rok produkcji nie może być mniejszy niż 1900")
     @Max(value = 2023, message = "Rok produkcji nie może być większy niż 2023")
     private Integer prodYear;
     @Min(value = 1, message = "Minimalna moc silnika to 1 KM")
+    @Max(value = 1000, message = "Maksymalna moc silnika to 1000 KM")
     private Integer enginePower;
     @Column(name = "owner_id")
     private Long ownerId;

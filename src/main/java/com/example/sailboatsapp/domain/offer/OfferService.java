@@ -37,4 +37,9 @@ public class OfferService {
                     return offer;
                 }).orElse(null);
     }
+
+    public void deleteOffer(Long id) {
+        offerRepository.deleteById(id);
+    }
+
 }

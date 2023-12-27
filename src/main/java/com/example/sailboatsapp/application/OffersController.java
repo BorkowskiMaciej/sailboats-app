@@ -1,4 +1,4 @@
-package com.example.sailboatsapp.application.offer;
+package com.example.sailboatsapp.application;
 
 import com.example.sailboatsapp.domain.boat.BoatService;
 import com.example.sailboatsapp.domain.boat.model.Boat;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,7 +32,7 @@ public class OffersController {
         model.addAttribute("userBoats", userBoats);
         model.addAttribute("offer", new Offer());
 
-        return "offers/newOfferForm";
+        return "offers/add";
     }
 
     @GetMapping()
@@ -60,7 +61,7 @@ public class OffersController {
         if (bindingResult.hasErrors()) {
             List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
             model.addAttribute("userBoats", userBoats);
-            return "offers/newOfferForm";
+            return "offers/add";
         }
         offer.setStartDate(startDate);
         offer.setEndDate(endDate);
@@ -68,5 +69,40 @@ public class OffersController {
         offerService.addOffer(offer);
         return "redirect:/offers";
     }
+
+    @GetMapping("/edit/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        Offer offer = offerService.findWithUserAndBoat(id);
+        List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
+        model.addAttribute("userBoats", userBoats);
+        model.addAttribute("offer", offer);
+        return "offers/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateOffer(@ModelAttribute("offer") @Valid Offer offer,
+            BindingResult bindingResult,
+            Model model,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+        if (bindingResult.hasErrors()) {
+            List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
+            model.addAttribute("userBoats", userBoats);
+            return "offers/edit";
+        }
+        offer.setStartDate(startDate);
+        offer.setEndDate(endDate);
+        offer.setOwnerId(userService.getAuthenticatedUserId());
+        offerService.addOffer(offer);
+        return "redirect:/offers";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteBoat(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        offerService.deleteOffer(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Oferta została usunięta.");
+        return "redirect:/offers";
+    }
+
 
 }

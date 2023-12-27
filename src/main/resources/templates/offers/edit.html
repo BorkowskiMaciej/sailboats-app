@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Edycja oferty</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script type="text/javascript">
+
+    function validateForm() {
+      if (!validateDates()) {
+        return false;
+      }
+
+      if (!validateIntegerFields()) {
+        return false;
+      }
+      return true;
+    }
+    function validateDates() {
+      var startDate = document.getElementById("startDate").value;
+      var endDate = document.getElementById("endDate").value;
+
+      if (new Date(startDate) > new Date(endDate)) {
+        alert("Data zakończenia nie może być wcześniejsza niż data rozpoczęcia.");
+        return false;
+      }
+      return true;
+    }
+
+    function validateIntegerFields() {
+      var price = document.getElementById("price").value;
+      var deposit = document.getElementById("deposit").value;
+
+      var maxIntegerValue = 2147483647;
+      var minIntegerValue = -2147483648;
+
+      if (!isIntegerInRange(price, minIntegerValue, maxIntegerValue) ||
+              !isIntegerInRange(deposit, minIntegerValue, maxIntegerValue)) {
+        alert("Jedna lub więcej wprowadzonych wartości liczbowych jest nieprawidłowa.");
+        return false;
+      }
+
+      return true;
+    }
+
+    function isIntegerInRange(value, min, max) {
+      var number = parseInt(value);
+      return !isNaN(number) && number >= min && number <= max;
+    }
+  </script>
+</head>
+<body>
+<main>
+  <section layout:fragment="content" class="offers-section">
+    <h2>Edycja oferty</h2>
+    <form id="editOfferForm" th:action="@{/offers/update/{id}(id=${offer.id})}" th:object="${offer}" method="post" class="offers-section" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="boat">Wybierz łódź:</label>
+        <select id="boat" th:field="*{boatId}" class="form-control" required>
+          <option th:each="boat : ${userBoats}" th:value="${boat.id}" th:text="${boat.name}"></option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="port">Port:</label>
+        <input type="text" id="port" th:field="*{port}" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="price">Cena:</label>
+        <input type="number" id="price" th:field="*{price}" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="deposit">Kaucja:</label>
+        <input type="number" id="deposit" th:field="*{deposit}" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="startDate">Data rozpoczęcia:</label>
+        <input type="date" id="startDate" th:field="*{startDate}" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="endDate">Data zakończenia:</label>
+        <input type="date" id="endDate" th:field="*{endDate}" class="form-control" required />
+      </div>
+      <div class="form-group">
+        <label for="description">Opis:</label>
+        <textarea id="description" th:field="*{description}" class="form-control" required></textarea>
+      </div>
+      <div class="mt-3">
+        <button type="button" onclick="window.history.back()" class="btn btn-secondary">Wróć</button>
+        <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+      </div>
+    </form>
+  </section>
+</main>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

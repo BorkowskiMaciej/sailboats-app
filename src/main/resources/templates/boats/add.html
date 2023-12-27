@@ -4,6 +4,16 @@
     <title>Dodaj nową łódź</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script>
+        function validateForm() {
+            if (!validateFileSize()) {
+                return false;
+            }
+
+            if (!validateIntegerFields()) {
+                return false;
+            }
+            return true;
+        }
         function validateFileSize() {
             var fileInput = document.getElementById('file');
             var file = fileInput.files[0];
@@ -15,12 +25,33 @@
 
             return true;
         }
+        function validateIntegerFields() {
+            var maxHeadcount = document.getElementById("maxHeadcount").value;
+            var cabinsNumber = document.getElementById("cabinsNumber").value;
+            var enginePower = document.getElementById("enginePower").value;
+
+            var maxIntegerValue = 2147483647;
+            var minIntegerValue = -2147483648;
+
+            if (!isIntegerInRange(maxHeadcount, minIntegerValue, maxIntegerValue) ||
+                !isIntegerInRange(cabinsNumber, minIntegerValue, maxIntegerValue) ||
+                !isIntegerInRange(enginePower, minIntegerValue, maxIntegerValue)) {
+                alert("Jedna lub więcej wprowadzonych wartości liczbowych jest nieprawidłowa.");
+                return false;
+            }
+
+            return true;
+        }
+        function isIntegerInRange(value, min, max) {
+            var number = parseInt(value);
+            return !isNaN(number) && number >= min && number <= max;
+        }
     </script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
     <h2>Rejestracja nowej łodzi</h2>
-    <form th:action="@{/boats/add}" th:object="${boat}" method="post" class="offers-section" enctype="multipart/form-data" onsubmit="return validateFileSize()">
+    <form th:action="@{/boats/add}" th:object="${boat}" method="post" class="offers-section" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="form-group">
             <label for="file">Obraz łodzi:</label>
             <input type="file" id="file" name="file" accept="image/jpeg, image/png" required/>

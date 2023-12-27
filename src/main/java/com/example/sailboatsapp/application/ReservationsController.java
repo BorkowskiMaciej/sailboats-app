@@ -1,4 +1,4 @@
-package com.example.sailboatsapp.application.reservation;
+package com.example.sailboatsapp.application;
 
 import com.example.sailboatsapp.domain.reservation.ReservationService;
 import com.example.sailboatsapp.domain.reservation.model.Reservation;

@@ -34,4 +34,8 @@ public class BoatService {
         boatRepository.save(boat);
     }
 
+    public boolean checkIfBoatExists(String name) {
+        return boatRepository.existsByName(name);
+    }
+
 }
