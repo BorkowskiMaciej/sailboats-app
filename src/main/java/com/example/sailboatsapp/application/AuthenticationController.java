@@ -6,13 +6,12 @@ import com.example.sailboatsapp.security.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,8 +26,17 @@ public class AuthenticationController {
     private final UserService userService;
     private final LoginService loginService;
 
+    public boolean checkIfAuthenticated() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return auth != null && !auth.getName().equals("anonymousUser");
+    }
+
     @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (checkIfAuthenticated()){
+            return "redirect:/";
+        }
         if (error != null) {
             model.addAttribute("loginError", "Błędne dane logowania lub niezweryfikowane konto.");
         }
@@ -37,6 +45,9 @@ public class AuthenticationController {
 
     @GetMapping("/register")
     public ModelAndView showRegistrationForm() {
+        if (checkIfAuthenticated()){
+            return new ModelAndView("redirect:/");
+        }
         ModelAndView mav = new ModelAndView("authentication/register");
         mav.addObject("appUser", new AppUser());
         return mav;
@@ -44,11 +55,17 @@ public class AuthenticationController {
 
     @GetMapping("/confirm")
     public String showConfirmationForm() {
+        if (checkIfAuthenticated()){
+            return "redirect:/";
+        }
         return "authentication/confirm";
     }
 
     @GetMapping("/request-reset-password")
     public String showResetPasswordRequestForm() {
+        if (checkIfAuthenticated()){
+            return "redirect:/";
+        }
         return "authentication/resetPasswordRequest";
     }
 

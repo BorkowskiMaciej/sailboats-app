@@ -41,7 +41,8 @@ public class BoatsController {
     }
 
     @PostMapping("/add")
-    public String addBoat(@Valid Boat boat, BindingResult result, @RequestParam("file") MultipartFile file) {
+    public String addBoat(@Valid Boat boat, BindingResult result, @RequestParam("file") MultipartFile file,
+            RedirectAttributes redirectAttributes) {
         if(boatService.checkIfBoatExists(boat.getName())) {
             result.rejectValue("name", "name", "Łódź o takiej nazwie już istnieje");
             return "boats/add";
@@ -60,6 +61,7 @@ public class BoatsController {
         }
         boat.setOwnerId(userService.getAuthenticatedUserId());
         boatService.addBoat(boat);
+        redirectAttributes.addFlashAttribute("successMessage", "Łódź została pomyślnie dodana.");
         return "redirect:/boats";
     }
 

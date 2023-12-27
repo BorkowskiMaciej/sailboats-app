@@ -57,7 +57,8 @@ public class OffersController {
             BindingResult bindingResult,
             Model model,
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+            RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
             model.addAttribute("userBoats", userBoats);
@@ -67,6 +68,7 @@ public class OffersController {
         offer.setEndDate(endDate);
         offer.setOwnerId(userService.getAuthenticatedUserId());
         offerService.addOffer(offer);
+        redirectAttributes.addFlashAttribute("successMessage", "Oferta pomyślnie została dodana.");
         return "redirect:/offers";
     }
 
@@ -84,7 +86,8 @@ public class OffersController {
             BindingResult bindingResult,
             Model model,
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
+            @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
+            RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
             model.addAttribute("userBoats", userBoats);
@@ -94,6 +97,7 @@ public class OffersController {
         offer.setEndDate(endDate);
         offer.setOwnerId(userService.getAuthenticatedUserId());
         offerService.addOffer(offer);
+        redirectAttributes.addFlashAttribute("successMessage", "Oferta została zaktualizowana.");
         return "redirect:/offers";
     }
 

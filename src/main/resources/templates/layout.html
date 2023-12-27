@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <title>Layout template</title>
@@ -19,16 +17,22 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Strona główna</a>
                 </li>
-                <li class="nav-item dropdown" th:unless="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal == 'anonymousUser'}">
+                <li th:if="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal != 'anonymousUser'}">
+                    <a class="nav-link" href="/boats">Moje jachty</a>
+                </li>
+                <li th:if="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal != 'anonymousUser'}">
+                    <a class="nav-link" href="/offers">Moje oferty</a>
+                </li>
+                <li th:if="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal != 'anonymousUser'}">
+                    <a class="nav-link" href="/reservations/hosted">Moje rezerwacje</a>
+                </li>
+                <li class="nav-item dropdown" th:if="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal != 'anonymousUser'}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        th:text="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal.username}">
                         Nazwa użytkownika
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/account">Moje konto</a>
-                        <a class="dropdown-item" href="/boats">Moje jachty</a>
-                        <a class="dropdown-item" href="/offers">Moje oferty</a>
-                        <a class="dropdown-item" href="/reservations/hosted">Moje rezerwacje</a>
+                        <a class="dropdown-item" href="/account">Konto</a>
                         <form action="/logout" method="post" class="dropdown-item">
                             <input type="submit" value="Wyloguj się" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                         </form>
