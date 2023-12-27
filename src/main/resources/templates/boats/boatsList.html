@@ -5,35 +5,40 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-<section layout:fragment="content">
-  <h1>Lista łódek</h1>
+<section layout:fragment="content" class="offers-section">
+  <h2>Lista łódek</h2>
   <table class="table table-hover">
     <thead class="thead-dark">
     <tr>
-      <th>ID</th>
+      <th>Zdjęcie</th>
       <th>Nazwa</th>
       <th>Typ</th>
       <th>Model</th>
-      <th>Liczba osób</th>
+      <th>Max. liczba osób</th>
       <th>Liczba kabin</th>
       <th>Rok produkcji</th>
-      <th>Moc silnika</th>
-      <th>Akcje</th> <!-- Dodatkowa kolumna dla akcji -->
+      <th>Moc silnika (KM)</th>
+      <th>Akcje</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="boat : ${boats}">
-      <td th:text="${boat.id}"></td>
-      <td th:text="${boat.name}"></td>
-      <td th:text="${boat.type}"></td>
-      <td th:text="${boat.model}"></td>
+      <td><img th:src="@{'boats/image/' + ${boat.id}}" alt="Obraz łodzi" style="width:100px;height:auto;"/></td>
+      <td th:text="${#strings.length(boat.name) > 15 ? #strings.substring(boat.name, 0, 15) + '...' : boat.name}"></td>
+      <td th:text="${boat.type.name() == 'SAILBOAT' ? 'Żaglowy' : 'Motorowy'}"></td>
+      <td th:text="${#strings.length(boat.model) > 15 ? #strings.substring(boat.model, 0, 15) + '...' : boat.model}"></td>
       <td th:text="${boat.maxHeadcount}"></td>
       <td th:text="${boat.cabinsNumber}"></td>
       <td th:text="${boat.prodYear}"></td>
       <td th:text="${boat.enginePower}"></td>
       <td>
-        <a th:href="@{/boats/edit/{id}(id=${boat.id})}" class="btn btn-sm btn-primary">Edytuj</a>
-        <a th:href="@{/boats/delete/{id}(id=${boat.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tę łódkę?')">Usuń</a>
+        <div>
+          <form th:action="@{/boats/delete/{id}(id=${boat.id})}" method="post">
+            <a th:href="@{/boats/edit/{id}(id=${boat.id})}" class="btn btn-sm btn-primary">Edytuj</a>
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tę łódkę?')">Usuń</button>
+          </form>
+        </div>
       </td>
     </tr>
     </tbody>

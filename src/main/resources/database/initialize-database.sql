@@ -24,14 +24,16 @@ CREATE TABLE IF NOT EXISTS "app_user"
 CREATE TABLE IF NOT EXISTS boat
 (
     id            SERIAL PRIMARY KEY,
-    name          VARCHAR(255)                       NOT NULL,
-    type          VARCHAR(255)                       NOT NULL,
-    model         VARCHAR(255)                       NOT NULL,
-    max_headcount INTEGER                            NOT NULL,
-    cabins_number INTEGER                            NOT NULL,
-    prod_year     INTEGER                            NOT NULL,
-    engine_power  INTEGER                            NOT NULL,
-    owner_id      INTEGER REFERENCES "app_user" (id) ON DELETE CASCADE NOT NULL
+    name          VARCHAR(255)                                         NOT NULL,
+    type          VARCHAR(255)                                         NOT NULL,
+    model         VARCHAR(255)                                         NOT NULL,
+    max_headcount INTEGER                                              NOT NULL,
+    cabins_number INTEGER                                              NOT NULL,
+    prod_year     INTEGER                                              NOT NULL,
+    engine_power  INTEGER                                              NOT NULL,
+    owner_id      INTEGER REFERENCES "app_user" (id) ON DELETE CASCADE NOT NULL,
+    image         BYTEA,
+    image_name    VARCHAR(255)
 
 );
 

@@ -1,9 +1,14 @@
 package com.example.sailboatsapp.domain.boat.model;
 
-import com.example.sailboatsapp.domain.user.model.AppUser;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
+import org.hibernate.validator.constraints.Length;
 
 @Entity(name = "boat")
 @Getter
@@ -16,11 +21,13 @@ public class Boat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Nazwa nie może być pusta")
+    @NotBlank(message = "Nazwa nie może być pusta ani składać się z samych białych znaków")
+    @Length(max = 30, message = "Nazwa nie może być dłuższa niż 30 znaków")
     private String name;
     @NotNull(message = "Typ nie może być pusty")
     private BoatType type;
-    @NotBlank(message = "Model nie może być pusty")
+    @NotBlank(message = "Model nie może być pusty ani składać się z samych białych znaków")
+    @Length(max = 30, message = "Model nie może być dłuższy niż 30 znaków")
     private String model;
     @Min(value = 1, message = "Minimalna liczba osób to 1")
     private Integer maxHeadcount;
@@ -33,5 +40,10 @@ public class Boat {
     private Integer enginePower;
     @Column(name = "owner_id")
     private Long ownerId;
+    @JdbcType(VarbinaryJdbcType.class)
+    @Column(name = "image", columnDefinition="bytea")
+    private byte[] image;
+    @Column(name = "image_name")
+    private String imageName;
 
 }

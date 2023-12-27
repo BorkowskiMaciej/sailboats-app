@@ -32,7 +32,7 @@ public class AuthenticationController {
         if (error != null) {
             model.addAttribute("loginError", "Błędne dane logowania lub niezweryfikowane konto.");
         }
-        return "authorization/login";
+        return "authentication/login";
     }
 
     @GetMapping("/register")
@@ -56,11 +56,11 @@ public class AuthenticationController {
     public String registerUser(@Valid AppUser appUser, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (userService.checkIfUsernameExists(appUser.getUsername())) {
             bindingResult.rejectValue("username", "error.user", "Konto z taką nazwą użytkownika już istnieje.");
-            return "authorization/register";
+            return "authentication/register";
         }
         if (userService.checkIfEmailExists(appUser.getEmail())) {
             bindingResult.rejectValue("email", "error.email", "Konto z takim adresem e-mail już istnieje.");
-            return "authorization/register";
+            return "authentication/register";
         }
         if (Boolean.TRUE.equals(appUser.getIsCompany())) {
             if (appUser.getCompanyName() == null || appUser.getCompanyName().trim().isEmpty()) {
@@ -80,7 +80,7 @@ public class AuthenticationController {
             return "redirect:/auth/confirm";
         }
 
-        return "authorization/register";
+        return "authentication/register";
     }
 
     @PostMapping("/confirm")
@@ -92,10 +92,10 @@ public class AuthenticationController {
         if (user.isPresent()) {
             loginService.confirm(user.get().getUsername());
             model.addAttribute("message", "Konto zostało pomyślnie aktywowane.");
-            return "authorization/login";
+            return "authentication/login";
         } else {
             model.addAttribute("error", "Nieprawidłowy kod potwierdzający.");
-            return "authorization/confirm";
+            return "authentication/confirm";
         }
     }
 
@@ -108,10 +108,10 @@ public class AuthenticationController {
         if (user.isPresent()) {
             loginService.requestPasswordReset(user.get());
             model.addAttribute("message", "Kod resetowania hasła został wysłany na Twój adres e-mail.");
-            return "authorization/enterResetCode";
+            return "authentication/enterResetCode";
         } else {
             model.addAttribute("error", "Nie znaleziono konta z podanym adresem e-mail.");
-            return "authorization/resetPasswordRequest";
+            return "authentication/resetPasswordRequest";
         }
     }
 
@@ -125,10 +125,10 @@ public class AuthenticationController {
         if (user.isPresent()) {
             loginService.resetPassword(user.get().getUsername(), newPassword);
             model.addAttribute("message", "Twoje hasło zostało zresetowane.");
-            return "authorization/login";
+            return "authentication/login";
         } else {
             model.addAttribute("error", "Nieprawidłowy kod resetowania.");
-            return "authorization/enterResetCode";
+            return "authentication/enterResetCode";
         }
     }
 

@@ -26,4 +26,12 @@ public class BoatService {
         return boatRepository.findById(boatId).orElseThrow();
     }
 
+    public void deleteBoat(Long id) {
+        boatRepository.deleteById(id);
+    }
+
+    public void updateBoat(Boat boat) {
+        boatRepository.save(boat);
+    }
+
 }
