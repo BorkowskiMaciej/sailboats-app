@@ -26,6 +26,10 @@
                           || T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'OWNER')}">
                     <a class="nav-link" href="/offers">Moje oferty</a>
                 </li>
+                <li th:if="${T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'ADMIN')
+                          || T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'OWNER')}">
+                    <a class="nav-link" href="/reservations/hosted">Moje rezerwacje</a>
+                </li>
                 <li th:if="${T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'USER')}">
                     <a class="nav-link" href="/reservations/booked">Moje rezerwacje</a>
                 </li>

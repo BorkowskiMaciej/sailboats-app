@@ -48,4 +48,8 @@ public class ReservationService {
                 .toList();
     }
 
+    public void deleteReservation(Long id) {
+        reservationRepository.deleteById(id);
+    }
+
 }
