@@ -7,6 +7,7 @@ import com.example.sailboatsapp.domain.offer.model.Offer;
 import com.example.sailboatsapp.domain.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/offers")
 @RequiredArgsConstructor
+@Slf4j
 public class OffersController {
 
     private final BoatService boatService;
@@ -31,13 +33,12 @@ public class OffersController {
         List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
         model.addAttribute("userBoats", userBoats);
         model.addAttribute("offer", new Offer());
-
         return "offers/add";
     }
 
     @GetMapping()
-    public String showOffers(Model model) {
-        List<Offer> offers = offerService.findAllWithUserAndBoat();
+    public String showMyOffers(Model model) {
+        List<Offer> offers = offerService.findAllWithUserAndBoatByOwnerId(userService.getAuthenticatedUserId());
         model.addAttribute("offers", offers);
         return "offers/list";
     }
@@ -59,6 +60,15 @@ public class OffersController {
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             RedirectAttributes redirectAttributes) {
+        if (startDate.isBefore(LocalDate.now())) {
+            bindingResult.rejectValue("startDate", "error.startDate", "Data rozpoczęcia oferty nie może być wcześniejsza niż dzisiejsza data.");
+        }
+        if (startDate.isAfter(endDate)) {
+            bindingResult.rejectValue("endDate", "error.endDate", "Data zakończenia oferty nie może być wcześniejsza niż data rozpoczęcia oferty.");
+        }
+        if (offerService.isDateRangeOverlappingWithExistingOffers(offer.getBoatId(), startDate, endDate)) {
+            bindingResult.rejectValue("boatId", "error.boatId", "Istnieje już oferta dla tej łodzi w wybranym okresie czasu.");
+        }
         if (bindingResult.hasErrors()) {
             List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
             model.addAttribute("userBoats", userBoats);
@@ -72,7 +82,7 @@ public class OffersController {
         return "redirect:/offers";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/update/{id}")
     public String showEditForm(@PathVariable("id") Long id, Model model) {
         Offer offer = offerService.findWithUserAndBoat(id);
         List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
@@ -88,6 +98,15 @@ public class OffersController {
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
             RedirectAttributes redirectAttributes) {
+        if (startDate.isBefore(LocalDate.now())) {
+            bindingResult.rejectValue("startDate", "error.startDate", "Data rozpoczęcia oferty nie może być wcześniejsza niż dzisiejsza data.");
+        }
+        if (startDate.isAfter(endDate)) {
+            bindingResult.rejectValue("endDate", "error.endDate", "Data zakończenia oferty nie może być wcześniejsza niż data rozpoczęcia oferty.");
+        }
+        if (offerService.isDateRangeOverlappingWithExistingOffers(offer.getBoatId(), startDate, endDate)) {
+            bindingResult.rejectValue("boatId", "error.boatId", "Istnieje już oferta dla tej łodzi w wybranym okresie czasu.");
+        }
         if (bindingResult.hasErrors()) {
             List<Boat> userBoats = boatService.findAllByOwnerId(userService.getAuthenticatedUserId());
             model.addAttribute("userBoats", userBoats);
@@ -107,6 +126,4 @@ public class OffersController {
         redirectAttributes.addFlashAttribute("successMessage", "Oferta została usunięta.");
         return "redirect:/offers";
     }
-
-
 }

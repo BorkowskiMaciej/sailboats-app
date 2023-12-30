@@ -7,6 +7,7 @@ import com.example.sailboatsapp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -29,6 +30,14 @@ public class OfferService {
                 }).toList();
     }
 
+    public List<Offer> findAllWithUserAndBoatByOwnerId(Long ownerId) {
+        return offerRepository.findAllByOwnerId(ownerId)
+                .stream().peek(offer -> {
+                    offer.setBoat(boatService.findById(offer.getBoatId()));
+                    offer.setOwner(userService.findById(offer.getOwnerId()));
+                }).toList();
+    }
+
     public Offer findWithUserAndBoat(Long offerId) {
         return offerRepository.findById(offerId)
                 .map(offer -> {
@@ -41,5 +50,18 @@ public class OfferService {
     public void deleteOffer(Long id) {
         offerRepository.deleteById(id);
     }
+
+    public boolean isDateRangeOverlappingWithExistingOffers(Long boatId, LocalDate startDate, LocalDate endDate) {
+        List<Offer> existingOffers = offerRepository.findByBoatId(boatId);
+
+        for (Offer existingOffer : existingOffers) {
+            if (!(endDate.isBefore(existingOffer.getStartDate()) || startDate.isAfter(existingOffer.getEndDate()))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 }
