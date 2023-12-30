@@ -3,6 +3,7 @@ package com.example.sailboatsapp.application;
 import com.example.sailboatsapp.domain.user.UserService;
 import com.example.sailboatsapp.domain.user.model.AppUser;
 import com.example.sailboatsapp.security.LoginService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
@@ -70,7 +73,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid AppUser appUser, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String registerUser(@Valid AppUser appUser, BindingResult bindingResult, RedirectAttributes redirectAttributes,
+            HttpServletRequest request) {
         if (userService.checkIfUsernameExists(appUser.getUsername())) {
             bindingResult.rejectValue("username", "error.user", "Konto z taką nazwą użytkownika już istnieje.");
             return "authentication/register";
@@ -91,6 +95,10 @@ public class AuthenticationController {
             }
         }
         if (!bindingResult.hasErrors()) {
+            String role = request.getParameter("role");
+            Set<String> roles = new HashSet<>();
+            roles.add(role);
+            appUser.setRoles(roles);
             loginService.register(appUser);
             redirectAttributes.addFlashAttribute("message",
                     "Pomyślnie zarejestrowano. W celu dokończenia rejestracji wprowadź kod wysłany na Twój adres e-mail.");

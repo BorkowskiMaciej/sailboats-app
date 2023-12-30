@@ -42,7 +42,7 @@ public class OffersController {
         return "offers/list";
     }
 
-    @GetMapping("/{offerId}")
+    @GetMapping("/show/{offerId}")
     public String showOfferDetails(@PathVariable Long offerId, Model model) {
         Offer offer = offerService.findWithUserAndBoat(offerId);
         if (offer == null) {

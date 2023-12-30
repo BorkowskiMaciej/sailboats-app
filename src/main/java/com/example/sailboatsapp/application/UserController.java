@@ -25,6 +25,7 @@ public class UserController {
     @GetMapping
     public String showAccount(Model model, @AuthenticationPrincipal UserDetails currentUser) {
         AppUser user = userService.findByUsername(currentUser.getUsername());
+        model.addAttribute("role", currentUser.getAuthorities().stream().findFirst().orElseThrow().getAuthority());
         model.addAttribute("user", user);
         return "user/account";
     }

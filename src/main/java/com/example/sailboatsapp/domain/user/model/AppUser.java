@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,6 +48,11 @@ public class AppUser {
     private String confirmationCode;
     @Column(name = "reset_password_code")
     private String resetPasswordCode;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "app_user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
+    private Set<String> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "ownerId")
     private Set<Boat> boats;

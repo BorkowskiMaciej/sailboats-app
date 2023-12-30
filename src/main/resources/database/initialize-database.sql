@@ -21,6 +21,19 @@ CREATE TABLE IF NOT EXISTS "app_user"
     address             VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS app_user_roles
+(
+    user_id INT NOT NULL,
+    role    VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_user
+        FOREIGN KEY (user_id)
+            REFERENCES app_user (id)
+            ON DELETE CASCADE,
+    CONSTRAINT app_user_roles_pkey
+        PRIMARY KEY (user_id, role)
+);
+
+
 CREATE TABLE IF NOT EXISTS boat
 (
     id            SERIAL PRIMARY KEY,

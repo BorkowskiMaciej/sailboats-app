@@ -18,14 +18,16 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Strona główna</a>
                 </li>
-                <li th:if="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal != 'anonymousUser'}">
+                <li th:if="${T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'ADMIN')
+                          || T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'OWNER')}">
                     <a class="nav-link" href="/boats">Moje jachty</a>
                 </li>
-                <li th:if="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal != 'anonymousUser'}">
+                <li th:if="${T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'ADMIN')
+                          || T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'OWNER')}">
                     <a class="nav-link" href="/offers">Moje oferty</a>
                 </li>
-                <li th:if="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal != 'anonymousUser'}">
-                    <a class="nav-link" href="/reservations/hosted">Moje rezerwacje</a>
+                <li th:if="${T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'USER')}">
+                    <a class="nav-link" href="/reservations/booked">Moje rezerwacje</a>
                 </li>
                 <li class="nav-item dropdown" th:if="${T(org.springframework.security.core.context.SecurityContextHolder).context.authentication.principal != 'anonymousUser'}">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"

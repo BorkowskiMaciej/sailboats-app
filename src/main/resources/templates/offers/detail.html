@@ -1,29 +1,61 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml"  lang="pl">
+<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
   <meta charset="UTF-8">
+  <title>Szczegóły oferty</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .detail-container {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
-<section layout:fragment="content">
-<h1>Szczegóły oferty</h1>
-<div>
-  <h2>Informacje o ofercie</h2>
-  <p><b>ID:</b> <span th:text="${offer.id}"></span></p>
-  <p><b>Nazwa łodzi:</b> <span th:text="${offer.boat.name}"></span></p>
-  <p><b>Typ łodzi:</b> <span th:text="${offer.boat.type}"></span></p>
-  <p><b>Model łodzi:</b> <span th:text="${offer.boat.model}"></span></p>
-  <p><b>Port:</b> <span th:text="${offer.port}"></span></p>
-  <p><b>Cena:</b> <span th:text="${offer.price}"></span></p>
-  <p><b>Kaucja:</b> <span th:text="${offer.deposit}"></span></p>
-  <p><b>Data rozpoczęcia:</b> <span th:text="${offer.startDate}"></span></p>
-  <p><b>Data zakończenia:</b> <span th:text="${offer.endDate}"></span></p>
-  <p><b>Opis:</b> <span th:text="${offer.description}"></span></p>
-  <p><b>Właściciel:</b> <span th:text="${offer.owner.username}"></span></p>
-</div>
-<form th:action="@{/reservations/new/{id}(id=${offer.id})}" method="post">
-  <input type="submit" value="Zarezerwuj" />
-</form>
-<a href="/offers">Powrót do listy ofert</a>
+<section layout:fragment="content" class="container mt-4">
+  <div class="row">
+    <div class="col-md-8">
+      <h3 class="mb-4">Szczegóły oferty</h3>
+    </div>
+    <div class="col-md-4 text-right">
+      <h3 class="mb-4">Oferta nr: <span th:text="${offer.id}"></span></h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 image-container">
+      <img th:src="@{'/boats/image/' + ${offer.boat.id}}" alt="Obraz łodzi" class="img-fluid"/>
+    </div>
+    <div class="col-md-6 detail-container">
+      <p><b>Nazwa łodzi:</b> <span th:text="${offer.boat.name}"></span></p>
+      <p><b>Typ łodzi:</b> <span th:text="${offer.boat.type}"></span></p>
+      <p><b>Model łodzi:</b> <span th:text="${offer.boat.model}"></span></p>
+      <p><b>Port:</b> <span th:text="${offer.port}"></span></p>
+      <p><b>Cena:</b> <span th:text="${offer.price}"></span> PLN</p>
+      <p><b>Kaucja:</b> <span th:text="${offer.deposit}"></span> PLN</p>
+      <p><b>Data rozpoczęcia:</b> <span th:text="${offer.startDate}"></span></p>
+      <p><b>Data zakończenia:</b> <span th:text="${offer.endDate}"></span></p>
+      <p><b>Właściciel:</b> <span th:text="${offer.owner.username}"></span></p>
+    </div>
+  </div>
+  <div class="detail-container">
+    <h3>Opis</h3>
+    <p th:text="${offer.description}"></p>
+  </div>
+  <form th:action="@{/reservations/new/{id}(id=${offer.id})}" method="post" class="mb-2">
+    <button type="button" onclick="window.history.back()" class="btn btn-secondary">Wróć</button>
+    <input type="submit" value="Zarezerwuj" class="btn btn-primary" onclick="return confirm('Czy na pewno chcesz dokonać rezerwacji?')"/>
+  </form>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -44,7 +44,7 @@
       <td>
         <div>
           <form th:action="@{/offers/delete/{id}(id=${offer.id})}" method="post">
-            <a th:href="@{/offers/{id}(id=${offer.id})}" class="btn btn-sm btn-primary">Zobacz szczegóły</a>
+            <a th:href="@{/offers/show/{id}(id=${offer.id})}" class="btn btn-sm btn-primary">Zobacz szczegóły</a>
             <a th:href="@{/offers/edit/{id}(id=${offer.id})}" class="btn btn-sm btn-secondary">Edytuj</a>
             <input type="hidden" name="_method" value="DELETE" />
             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ofertę?')">Wycofaj</button>
