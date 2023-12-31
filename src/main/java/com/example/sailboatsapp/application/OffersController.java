@@ -49,7 +49,9 @@ public class OffersController {
         if (offer == null) {
             return "redirect:/offers";
         }
+        boolean isReserved = offerService.isOfferReserved(offerId);
         model.addAttribute("offer", offer);
+        model.addAttribute("isOfferAvailable", !isReserved);
         return "offers/detail";
     }
 

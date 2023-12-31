@@ -3,18 +3,22 @@ package com.example.sailboatsapp.domain.offer;
 import com.example.sailboatsapp.domain.boat.BoatService;
 import com.example.sailboatsapp.domain.offer.model.Offer;
 import com.example.sailboatsapp.domain.offer.repository.OfferRepository;
+import com.example.sailboatsapp.domain.reservation.ReservationService;
+import com.example.sailboatsapp.domain.reservation.repository.ReservationRepository;
 import com.example.sailboatsapp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
 public class OfferService {
 
     private final OfferRepository offerRepository;
+    private final ReservationRepository reservationService;
     private final BoatService boatService;
     private final UserService userService;
 
@@ -62,6 +66,17 @@ public class OfferService {
 
         return false;
     }
+
+    public List<Offer> findAllAvailableWithUserAndBoat() {
+        return findAllWithUserAndBoat().stream()
+                .filter(offer -> !isOfferReserved(offer.getId()))
+                .collect(Collectors.toList());
+    }
+
+    public boolean isOfferReserved(Long offerId) {
+        return reservationService.existsByOfferId(offerId);
+    }
+
 
 
 }

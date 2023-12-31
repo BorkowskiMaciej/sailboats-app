@@ -17,7 +17,7 @@ public class HomeController {
     private final OfferService offerService;
     @GetMapping("/")
     public String home(Model model) {
-        List<Offer> offers = offerService.findAllWithUserAndBoat();
+        List<Offer> offers = offerService.findAllAvailableWithUserAndBoat();
         model.addAttribute("offers", offers);
         return "home";
     }

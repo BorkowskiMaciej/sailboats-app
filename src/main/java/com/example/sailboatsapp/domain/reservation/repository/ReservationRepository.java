@@ -12,4 +12,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findAllByTenantId(Long tenantId);
     List<Reservation> findAllByLandlordId(Long landlordId);
 
+    boolean existsByOfferId(Long offerId);
+
 }

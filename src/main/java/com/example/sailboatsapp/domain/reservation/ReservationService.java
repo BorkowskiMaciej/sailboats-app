@@ -52,4 +52,8 @@ public class ReservationService {
         reservationRepository.deleteById(id);
     }
 
+    public boolean existsByOfferId(Long offerId) {
+        return reservationRepository.existsByOfferId(offerId);
+    }
+
 }
