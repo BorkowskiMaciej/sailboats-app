@@ -46,16 +46,11 @@
         }
 
         window.onload = function() {
-            var successAlert = document.getElementById("successAlert");
-            if (successAlert) {
-                setTimeout(function() {
-                    successAlert.style.display = 'none';
-                }, 5000);
-            }
             toggleCompanyFields();
             document.getElementById("userForm").onsubmit = validateForm;
         };
     </script>
+    <script src="/js/successAlertTimeout.js"></script>
 </head>
 <body>
 <main>

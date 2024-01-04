@@ -33,16 +33,8 @@
         function goBack() {
             window.history.back();
         }
-
-        window.onload = function() {
-            var successAlert = document.getElementById("successAlert");
-            if (successAlert) {
-                setTimeout(function() {
-                    successAlert.style.display = 'none';
-                }, 5000);
-            }
-        };
     </script>
+    <script src="/js/successAlertTimeout.js"></script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">

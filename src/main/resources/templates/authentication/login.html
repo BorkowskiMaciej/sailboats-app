@@ -1,16 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
-    <script>
-        window.onload = function() {
-            var errorAlert = document.getElementById("errorAlert");
-            if (errorAlert) {
-                setTimeout(function() {
-                    errorAlert.style.display = 'none';
-                }, 5000);
-            }
-        };
-    </script>
+    <script src="/js/errorAlertTimeout.js"></script>
+
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
