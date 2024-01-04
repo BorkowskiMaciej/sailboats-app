@@ -2,61 +2,64 @@
 <html lang="pl" layout:decorate="~{layout}" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script>
-    window.onload = function() {
-      var successAlert = document.getElementById("successAlert");
-      if (successAlert) {
-        setTimeout(function() {
-          successAlert.style.display = 'none';
-        }, 3000);
-      }
-    };
-  </script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script>
+        window.onload = function () {
+            var successAlert = document.getElementById("successAlert");
+            if (successAlert) {
+                setTimeout(function () {
+                    successAlert.style.display = 'none';
+                }, 3000);
+            }
+        };
+    </script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
-  <h2>Lista ofert</h2>
-  <div th:if="${successMessage}" class="alert alert-success" id="successAlert" th:text="${successMessage}"></div>
-  <table class="table table-hover">
-    <thead class="thead-dark">
-    <tr>
-      <th>Nazwa łodzi</th>
-      <th>Port</th>
-      <th>Cena (zł)</th>
-      <th>Kaucja (zł)</th>
-      <th>Data rozpoczęcia</th>
-      <th>Data zakończenia</th>
-      <th>Opis</th>
-      <th>Akcje</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="offer : ${offers}">
-      <td th:text="${#strings.length(offer.boat.name) > 15 ? #strings.substring(offer.boat.name, 0, 15) + '...' : offer.boat.name}"></td>
-      <td th:text="${#strings.length(offer.port) > 15 ? #strings.substring(offer.port, 0, 15) + '...' : offer.port}"></td>
-      <td th:text="${offer.price}"></td>
-      <td th:text="${offer.deposit}"></td>
-      <td th:text="${offer.startDate}"></td>
-      <td th:text="${offer.endDate}"></td>
-      <td th:text="${#strings.length(offer.description) > 15 ? #strings.substring(offer.description, 0, 15) + '...' : offer.description}"></td>
-      <td>
-        <div>
-          <form th:action="@{/offers/delete/{id}(id=${offer.id})}" method="post">
-            <a th:href="@{/offers/show/{id}(id=${offer.id})}" class="btn btn-sm btn-primary">Zobacz szczegóły</a>
-            <a th:href="@{/offers/update/{id}(id=${offer.id})}" class="btn btn-sm btn-secondary">Edytuj</a>
-            <input type="hidden" name="_method" value="DELETE" />
-            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ofertę?')">Wycofaj</button>
-          </form>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <div>
-    <a th:href="@{/offers/new}" class="btn btn-success">Dodaj nową ofertę</a>
-  </div>
+    <h2>Lista ofert</h2>
+    <div th:if="${successMessage}" class="alert alert-success" id="successAlert" th:text="${successMessage}"></div>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Nazwa łodzi</th>
+            <th>Port</th>
+            <th>Cena (zł)</th>
+            <th>Kaucja (zł)</th>
+            <th>Data rozpoczęcia</th>
+            <th>Data zakończenia</th>
+            <th>Opis</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="offer : ${offers}">
+            <td th:text="${#strings.length(offer.boat.name) > 15 ? #strings.substring(offer.boat.name, 0, 15) + '...' : offer.boat.name}"></td>
+            <td th:text="${#strings.length(offer.port) > 15 ? #strings.substring(offer.port, 0, 15) + '...' : offer.port}"></td>
+            <td th:text="${offer.price}"></td>
+            <td th:text="${offer.deposit}"></td>
+            <td th:text="${offer.startDate}"></td>
+            <td th:text="${offer.endDate}"></td>
+            <td th:text="${#strings.length(offer.description) > 15 ? #strings.substring(offer.description, 0, 15) + '...' : offer.description}"></td>
+            <td>
+                <div>
+                    <form th:action="@{/offers/delete/{id}(id=${offer.id})}" method="post">
+                        <a th:href="@{/offers/show/{id}(id=${offer.id})}" class="btn btn-sm btn-primary">Zobacz
+                            szczegóły</a>
+                        <a th:href="@{/offers/update/{id}(id=${offer.id})}" class="btn btn-sm btn-secondary">Edytuj</a>
+                        <input type="hidden" name="_method" value="DELETE"/>
+                        <button type="submit" class="btn btn-sm btn-danger"
+                                onclick="return confirm('Czy na pewno chcesz usunąć ofertę?')">Wycofaj
+                        </button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <a th:href="@{/offers/new}" class="btn btn-success">Dodaj nową ofertę</a>
+    </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
