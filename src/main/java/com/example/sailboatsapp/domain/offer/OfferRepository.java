@@ -1,10 +1,8 @@
-package com.example.sailboatsapp.domain.offer.repository;
+package com.example.sailboatsapp.domain.offer;
 
-import com.example.sailboatsapp.domain.offer.model.Offer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Repository

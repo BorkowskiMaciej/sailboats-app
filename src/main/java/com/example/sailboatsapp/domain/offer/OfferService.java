@@ -1,10 +1,7 @@
 package com.example.sailboatsapp.domain.offer;
 
 import com.example.sailboatsapp.domain.boat.BoatService;
-import com.example.sailboatsapp.domain.offer.model.Offer;
-import com.example.sailboatsapp.domain.offer.repository.OfferRepository;
-import com.example.sailboatsapp.domain.reservation.ReservationService;
-import com.example.sailboatsapp.domain.reservation.repository.ReservationRepository;
+import com.example.sailboatsapp.domain.reservation.ReservationRepository;
 import com.example.sailboatsapp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -22,11 +19,17 @@ public class OfferService {
     private final BoatService boatService;
     private final UserService userService;
 
-    public void addOffer(Offer offer) {
+    public void addOrUpdateOffer(Offer offer) {
         offerRepository.save(offer);
     }
 
-    public List<Offer> findAllWithUserAndBoat() {
+    public List<Offer> findAllAvailableWithUserAndBoat() {
+        return findAllWithUserAndBoat().stream()
+                .filter(offer -> !isOfferReserved(offer.getId()))
+                .collect(Collectors.toList());
+    }
+
+    private List<Offer> findAllWithUserAndBoat() {
         return offerRepository.findAll()
                 .stream().peek(offer -> {
                     offer.setBoat(boatService.findById(offer.getBoatId()));
@@ -55,10 +58,17 @@ public class OfferService {
         offerRepository.deleteById(id);
     }
 
-    public boolean isDateRangeOverlappingWithExistingOffers(Long boatId, LocalDate startDate, LocalDate endDate) {
+    public boolean isOfferReserved(Long offerId) {
+        return reservationService.existsByOfferId(offerId);
+    }
+
+    public boolean isOverlapWithExistingOffers(Long offerId, Long boatId, LocalDate startDate, LocalDate endDate) {
         List<Offer> existingOffers = offerRepository.findByBoatId(boatId);
 
         for (Offer existingOffer : existingOffers) {
+            if (existingOffer.getId().equals(offerId)) {
+                continue;
+            }
             if (!(endDate.isBefore(existingOffer.getStartDate()) || startDate.isAfter(existingOffer.getEndDate()))) {
                 return true;
             }
@@ -66,17 +76,5 @@ public class OfferService {
 
         return false;
     }
-
-    public List<Offer> findAllAvailableWithUserAndBoat() {
-        return findAllWithUserAndBoat().stream()
-                .filter(offer -> !isOfferReserved(offer.getId()))
-                .collect(Collectors.toList());
-    }
-
-    public boolean isOfferReserved(Long offerId) {
-        return reservationService.existsByOfferId(offerId);
-    }
-
-
 
 }

@@ -1,7 +1,7 @@
 package com.example.sailboatsapp.security;
 
 import com.example.sailboatsapp.domain.user.UserService;
-import com.example.sailboatsapp.domain.user.model.AppUser;
+import com.example.sailboatsapp.domain.user.entity.AppUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

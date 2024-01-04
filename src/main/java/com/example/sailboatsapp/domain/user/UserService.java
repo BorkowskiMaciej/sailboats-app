@@ -1,7 +1,6 @@
 package com.example.sailboatsapp.domain.user;
 
-import com.example.sailboatsapp.domain.user.model.AppUser;
-import com.example.sailboatsapp.domain.user.repository.UserRepository;
+import com.example.sailboatsapp.domain.user.entity.AppUser;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

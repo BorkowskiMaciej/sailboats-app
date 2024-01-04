@@ -1,7 +1,7 @@
-package com.example.sailboatsapp.domain.user.model;
+package com.example.sailboatsapp.domain.user.entity;
 
-import com.example.sailboatsapp.domain.boat.model.Boat;
-import com.example.sailboatsapp.domain.offer.model.Offer;
+import com.example.sailboatsapp.domain.boat.entity.Boat;
+import com.example.sailboatsapp.domain.offer.Offer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -10,7 +10,6 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "app_user")

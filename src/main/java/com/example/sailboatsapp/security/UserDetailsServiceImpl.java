@@ -1,9 +1,8 @@
 package com.example.sailboatsapp.security;
 
-import com.example.sailboatsapp.domain.user.model.AppUser;
-import com.example.sailboatsapp.domain.user.repository.UserRepository;
+import com.example.sailboatsapp.domain.user.entity.AppUser;
+import com.example.sailboatsapp.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AuthorizationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

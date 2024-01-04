@@ -1,4 +1,4 @@
-package com.example.sailboatsapp.domain.boat.model;
+package com.example.sailboatsapp.domain.boat.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;

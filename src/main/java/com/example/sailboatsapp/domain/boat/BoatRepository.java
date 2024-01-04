@@ -1,6 +1,6 @@
-package com.example.sailboatsapp.domain.boat.repository;
+package com.example.sailboatsapp.domain.boat;
 
-import com.example.sailboatsapp.domain.boat.model.Boat;
+import com.example.sailboatsapp.domain.boat.entity.Boat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +11,5 @@ public interface BoatRepository extends JpaRepository<Boat, Long> {
 
     List<Boat> findAllByOwnerId(Long ownerId);
 
-    boolean existsByName(String name);
+    Boat findByName(String name);
 }

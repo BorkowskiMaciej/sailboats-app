@@ -1,7 +1,7 @@
 package com.example.sailboatsapp.application;
 
 import com.example.sailboatsapp.domain.user.UserService;
-import com.example.sailboatsapp.domain.user.model.AppUser;
+import com.example.sailboatsapp.domain.user.entity.AppUser;
 import com.example.sailboatsapp.security.LoginService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

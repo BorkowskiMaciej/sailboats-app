@@ -1,11 +1,9 @@
 package com.example.sailboatsapp.domain.boat;
 
-import com.example.sailboatsapp.domain.boat.model.Boat;
-import com.example.sailboatsapp.domain.boat.repository.BoatRepository;
+import com.example.sailboatsapp.domain.boat.entity.Boat;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -14,7 +12,7 @@ public class BoatService {
 
     private final BoatRepository boatRepository;
 
-    public void addBoat(Boat boat) {
+    public void addOrUpdateBoat(Boat boat) {
         boatRepository.save(boat);
     }
 
@@ -30,12 +28,12 @@ public class BoatService {
         boatRepository.deleteById(id);
     }
 
-    public void updateBoat(Boat boat) {
-        boatRepository.save(boat);
-    }
-
-    public boolean checkIfBoatExists(String name) {
-        return boatRepository.existsByName(name);
+    public boolean checkIfBoatExists(Long id, String name) {
+        Boat existingBoat = boatRepository.findByName(name);
+        if (existingBoat == null) {
+            return false;
+        }
+        return !existingBoat.getId().equals(id);
     }
 
 }

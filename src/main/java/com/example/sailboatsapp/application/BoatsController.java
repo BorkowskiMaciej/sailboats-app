@@ -1,7 +1,7 @@
 package com.example.sailboatsapp.application;
 
 import com.example.sailboatsapp.domain.boat.BoatService;
-import com.example.sailboatsapp.domain.boat.model.Boat;
+import com.example.sailboatsapp.domain.boat.entity.Boat;
 import com.example.sailboatsapp.domain.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -43,25 +43,28 @@ public class BoatsController {
     @PostMapping("/add")
     public String addBoat(@Valid Boat boat, BindingResult result, @RequestParam("file") MultipartFile file,
             RedirectAttributes redirectAttributes) {
-        if(boatService.checkIfBoatExists(boat.getName())) {
-            result.rejectValue("name", "name", "Łódź o takiej nazwie już istnieje");
+        if (processBoatAndImage(boat, result, file)) {
             return "boats/add";
         }
-        if (result.hasErrors()) {
-            return "boats/add";
-        }
-        if (!file.isEmpty()) {
-            try {
-                boat.setImage(file.getBytes());
-                boat.setImageName(file.getOriginalFilename());
-            } catch (IOException e) {
-                result.rejectValue("image", "image", "Wystąpił błąd z przetworzeniem zdjęcia");
-                return "boats/add";
-            }
-        }
-        boat.setOwnerId(userService.getAuthenticatedUserId());
-        boatService.addBoat(boat);
         redirectAttributes.addFlashAttribute("successMessage", "Łódź została pomyślnie dodana.");
+        return "redirect:/boats";
+    }
+
+    @GetMapping("/update/{id}")
+    public String showEditForm(@PathVariable("id") Long id, Model model) {
+        Boat boat = boatService.findById(id);
+        model.addAttribute("boat", boat);
+        return "boats/edit";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateBoat(@PathVariable("id") Long id, @Valid Boat boat, BindingResult result,
+            @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+        boat.setId(id);
+        if (processBoatAndImage(boat, result, file)) {
+            return "boats/edit";
+        }
+        redirectAttributes.addFlashAttribute("successMessage", "Łódź została zaktualizowana.");
         return "redirect:/boats";
     }
 
@@ -76,13 +79,6 @@ public class BoatsController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model) {
-        Boat boat = boatService.findById(id);
-        model.addAttribute("boat", boat);
-        return "boats/edit";
-    }
-
     @PostMapping("/delete/{id}")
     public String deleteBoat(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         boatService.deleteBoat(id);
@@ -90,11 +86,12 @@ public class BoatsController {
         return "redirect:/boats";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateBoat(@Valid Boat boat, BindingResult result,
-            @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+    private boolean processBoatAndImage(Boat boat, BindingResult result, MultipartFile file) {
+        if (boatService.checkIfBoatExists(boat.getId(), boat.getName())) {
+            result.rejectValue("name", "name", "Łódź o takiej nazwie już istnieje");
+        }
         if (result.hasErrors()) {
-            return "boats/edit";
+            return true;
         }
         try {
             if (!file.isEmpty()) {
@@ -102,14 +99,11 @@ public class BoatsController {
                 boat.setImageName(file.getOriginalFilename());
             }
             boat.setOwnerId(userService.getAuthenticatedUserId());
-            boatService.updateBoat(boat);
-            redirectAttributes.addFlashAttribute("successMessage", "Łódź została zaktualizowana.");
+            boatService.addOrUpdateBoat(boat);
         } catch (IOException e) {
             result.rejectValue("image", "image", "Wystąpił błąd podczas przetwarzania zdjęcia");
-            return "boats/edit";
+            return true;
         }
-
-        return "redirect:/boats";
+        return false;
     }
-
 }

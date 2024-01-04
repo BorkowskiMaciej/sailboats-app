@@ -1,8 +1,6 @@
 package com.example.sailboatsapp.domain.reservation;
 
 import com.example.sailboatsapp.domain.offer.OfferService;
-import com.example.sailboatsapp.domain.reservation.model.Reservation;
-import com.example.sailboatsapp.domain.reservation.repository.ReservationRepository;
 import com.example.sailboatsapp.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,18 +40,14 @@ public class ReservationService {
                 .stream()
                 .map(reservation -> reservation.toBuilder()
                         .offer(offerService.findWithUserAndBoat(reservation.getOfferId()))
-                        .landlord(userService.findById(reservation.getLandlordId()))
                         .tenant(userService.findById(reservation.getTenantId()))
+                        .landlord(userService.findById(reservation.getLandlordId()))
                         .build())
                 .toList();
     }
 
     public void deleteReservation(Long id) {
         reservationRepository.deleteById(id);
-    }
-
-    public boolean existsByOfferId(Long offerId) {
-        return reservationRepository.existsByOfferId(offerId);
     }
 
 }

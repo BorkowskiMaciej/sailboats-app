@@ -1,6 +1,6 @@
-package com.example.sailboatsapp.domain.reservation.repository;
+package com.example.sailboatsapp.domain.reservation;
 
-import com.example.sailboatsapp.domain.reservation.model.Reservation;
+import com.example.sailboatsapp.domain.reservation.Reservation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

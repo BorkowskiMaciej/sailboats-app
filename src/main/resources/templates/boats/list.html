@@ -44,7 +44,7 @@
       <td>
         <div>
           <form th:action="@{/boats/delete/{id}(id=${boat.id})}" method="post">
-            <a th:href="@{/boats/edit/{id}(id=${boat.id})}" class="btn btn-sm btn-primary">Edytuj</a>
+            <a th:href="@{/boats/update/{id}(id=${boat.id})}" class="btn btn-sm btn-primary">Edytuj</a>
             <input type="hidden" name="_method" value="DELETE" />
             <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tę łódkę?')">Usuń</button>
           </form>
