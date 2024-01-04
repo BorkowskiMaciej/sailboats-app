@@ -28,9 +28,9 @@ public class AppUser {
     private String password;
     private String email;
 
-    @NotBlank(message = "Imię nie może być puste.")
+    @NotBlank(message = "Imię nie może być puste ani składać się z samych białych znaków.")
     private String name;
-    @NotEmpty(message = "Nazwisko nie może być puste.")
+    @NotBlank(message = "Nazwisko nie może być puste ani składać się z samych białych znaków.")
     private String surname;
     @Column(name = "phone_number")
     @Pattern(regexp = "\\d{9}", message = "Numer telefonu musi składać się z 9 cyfr.")

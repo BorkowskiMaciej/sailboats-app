@@ -10,44 +10,20 @@
         }
         function toggleCompanyFields() {
             var isCompanySelected = document.getElementById("isCompany").value === 'true';
-            document.getElementById("companyFields").style.display = isCompanySelected ? "block" : "none";
+            var companyFields = document.getElementById("companyFields").querySelectorAll('input, select, textarea');
+
+            for (var i = 0; i < companyFields.length; i++) {
+                companyFields[i].disabled = !isCompanySelected;
+            }
         }
 
-        function validateForm() {
-            var name = document.getElementById("name").value.trim();
-            var surname = document.getElementById("surname").value.trim();
-            var phoneNumber = document.getElementById("phoneNumber").value;
-            var isCompany = document.getElementById("isCompany").value === 'true';
-            var companyName = document.getElementById("companyName").value.trim();
-            var tin = document.getElementById("tin").value.trim();
-            var address = document.getElementById("address").value.trim();
-
-            var phoneNumberRegex = /^\d{9}$/;
-            var isEmptyOrWhitespace = str => !str || str.length === 0 || /^\s*$/.test(str);
-
-            if (isEmptyOrWhitespace(name) || isEmptyOrWhitespace(surname)) {
-                alert("Imię i nazwisko nie mogą być puste ani zawierać samych białych znaków.");
-                return false;
-            }
-
-            if (!phoneNumberRegex.test(phoneNumber)) {
-                alert("Numer telefonu musi składać się z 9 cyfr.");
-                return false;
-            }
-
-            if (isCompany) {
-                if (isEmptyOrWhitespace(companyName) || isEmptyOrWhitespace(tin) || isEmptyOrWhitespace(address)) {
-                    alert("Nazwa firmy, NIP i adres nie mogą być puste ani zawierać samych białych znaków.");
-                    return false;
-                }
-            }
-
-            return true;
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleCompanyFields();
+            document.getElementById("isCompany").onchange = toggleCompanyFields;
+        });
 
         window.onload = function() {
             toggleCompanyFields();
-            document.getElementById("userForm").onsubmit = validateForm;
         };
     </script>
     <script src="/js/successAlertTimeout.js"></script>
@@ -70,19 +46,20 @@
                 <label>Rola:</label>
                 <input type="text" th:attr="value=${role == 'OWNER' ? 'Wynajmujący' : role == 'USER' ? 'Najemca' : 'Admin'}" class="form-control" readonly/>
             </div>
-
             <div class="form-group">
                 <label for="name">Imię:</label>
-                <input type="text" id="name" th:field="*{name}" class="form-control"/>
+                <input type="text" id="name" th:field="*{name}" class="form-control" required/>
+                <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></div>
             </div>
             <div class="form-group">
                 <label for="surname">Nazwisko:</label>
-                <input type="text" id="surname" th:field="*{surname}" class="form-control"/>
-
+                <input type="text" id="surname" th:field="*{surname}" class="form-control" required/>
+                <div th:if="${#fields.hasErrors('surname')}" class="alert alert-danger" th:errors="*{surname}"></div>
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Numer telefonu:</label>
-                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
+                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" required/>
+                <div th:if="${#fields.hasErrors('phoneNumber')}" class="alert alert-danger" th:errors="*{phoneNumber}"></div>
             </div>
             <div class="form-group">
                 <label for="isCompany">Czy firma:</label>
@@ -92,18 +69,21 @@
                 </select>
             </div>
 
-            <div id="companyFields" style="display: none;">
+            <div id="companyFields">
                 <div class="form-group">
                     <label for="companyName">Nazwa firmy:</label>
                     <input type="text" id="companyName" th:field="*{companyName}" class="form-control"/>
+                    <div th:if="${#fields.hasErrors('companyName')}" class="alert alert-danger" th:errors="*{companyName}"></div>
                 </div>
                 <div class="form-group">
                     <label for="tin">NIP:</label>
                     <input type="text" id="tin" th:field="*{tin}" class="form-control"/>
+                    <div th:if="${#fields.hasErrors('tin')}" class="alert alert-danger" th:errors="*{tin}"></div>
                 </div>
                 <div class="form-group">
                     <label for="address">Adres:</label>
                     <input type="text" id="address" th:field="*{address}" class="form-control"/>
+                    <div th:if="${#fields.hasErrors('address')}" class="alert alert-danger" th:errors="*{address}"></div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Zapisz zmiany</button>

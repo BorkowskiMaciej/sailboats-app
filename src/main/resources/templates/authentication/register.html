@@ -16,7 +16,7 @@
         <div class="form-group">
             <label for="username">Nazwa użytkownika:</label>
             <input type="text" id="username" th:field="*{username}" class="form-control"
-                   pattern="^[^\s]+$" title="Nazwa użytkownika nie może zawierać białych znaków." required />
+                   pattern="^[^\s]+$" title="Nazwa użytkownika nie może zawierać białych znaków" required />
             <div th:if="${#fields.hasErrors('username')}" class="alert alert-danger" th:errors="*{username}"></div>
         </div>
         <div class="form-group">
@@ -36,18 +36,18 @@
         </div>
         <div class="form-group">
             <label for="name">Imię:</label>
-            <input type="text" id="name" th:field="*{name}" class="form-control" />
+            <input type="text" id="name" th:field="*{name}" class="form-control" required/>
             <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></div>
         </div>
         <div class="form-group">
             <label for="surname">Nazwisko:</label>
-            <input type="text" id="surname" th:field="*{surname}" class="form-control" />
+            <input type="text" id="surname" th:field="*{surname}" class="form-control" required/>
             <div th:if="${#fields.hasErrors('surname')}" class="alert alert-danger" th:errors="*{surname}"></div>
         </div>
         <div class="form-group">
             <label for="phoneNumber">Numer telefonu:</label>
-            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control"/>
-            <div th:if="${#fields.hasErrors('phoneNumber')}" class="alert alert-danger" th:errors="*{phoneNumber}">Phone Number Error</div>
+            <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" required/>
+            <div th:if="${#fields.hasErrors('phoneNumber')}" class="alert alert-danger" th:errors="*{phoneNumber}"></div>
         </div>
         <div class="form-group">
             <label for="role">Rola:</label>

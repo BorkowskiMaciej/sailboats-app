@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,7 +32,27 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String updateAccount(@Valid AppUser user, RedirectAttributes redirectAttributes) {
+    public String updateAccount(@ModelAttribute("user") @Valid AppUser user,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes,
+            Model model,
+            @AuthenticationPrincipal UserDetails currentUser) {
+        if (Boolean.TRUE.equals(user.getIsCompany())) {
+            if (user.getCompanyName() == null || user.getCompanyName().trim().isEmpty()) {
+                bindingResult.rejectValue("companyName", "error.companyName", "Nazwa firmy jest wymagana.");
+            }
+            if (user.getTin() == null || user.getTin().trim().isEmpty()) {
+                bindingResult.rejectValue("tin", "error.tin", "Numer NIP jest wymagany.");
+            }
+            if (user.getAddress() == null || user.getAddress().trim().isEmpty()) {
+                bindingResult.rejectValue("address", "error.address", "Adres firmy jest wymagany.");
+            }
+        }
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("role", currentUser.getAuthorities().stream().findFirst().orElseThrow().getAuthority());
+            model.addAttribute("user", user);
+            return "user/account";
+        }
         userService.updateUser(user);
         redirectAttributes.addFlashAttribute("successMessage", "Dane zostały pomyślnie zaktualizowane.");
         return "redirect:/account";

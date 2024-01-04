@@ -29,25 +29,25 @@
 
   <div class="form-group">
     <label for="maxHeadcount">Maksymalna liczba osób:</label>
-    <input type="number" id="maxHeadcount" th:field="*{maxHeadcount}" class="form-control" min="1" required />
+    <input type="number" id="maxHeadcount" th:field="*{maxHeadcount}" class="form-control" required />
     <div th:if="${#fields.hasErrors('maxHeadcount')}" class="alert alert-danger" th:errors="*{maxHeadcount}"></div>
   </div>
 
   <div class="form-group">
     <label for="cabinsNumber">Liczba kabin:</label>
-    <input type="number" id="cabinsNumber" th:field="*{cabinsNumber}" class="form-control" min="1" required />
+    <input type="number" id="cabinsNumber" th:field="*{cabinsNumber}" class="form-control" required />
     <div th:if="${#fields.hasErrors('cabinsNumber')}" class="alert alert-danger" th:errors="*{cabinsNumber}"></div>
   </div>
 
   <div class="form-group">
     <label for="prodYear">Rok produkcji:</label>
-    <input type="number" id="prodYear" th:field="*{prodYear}" class="form-control" min="1900" max="2023" required />
+    <input type="number" id="prodYear" th:field="*{prodYear}" class="form-control" required />
     <div th:if="${#fields.hasErrors('prodYear')}" class="alert alert-danger" th:errors="*{prodYear}"></div>
   </div>
 
   <div class="form-group">
     <label for="enginePower">Moc silnika (KM):</label>
-    <input type="number" id="enginePower" th:field="*{enginePower}" class="form-control" min="1" required />
+    <input type="number" id="enginePower" th:field="*{enginePower}" class="form-control" required />
     <div th:if="${#fields.hasErrors('enginePower')}" class="alert alert-danger" th:errors="*{enginePower}"></div>
   </div>
 </div>

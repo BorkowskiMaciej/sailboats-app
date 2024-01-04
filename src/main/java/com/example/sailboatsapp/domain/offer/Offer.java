@@ -41,7 +41,7 @@ public class Offer {
     private LocalDate startDate;
     private LocalDate endDate;
     @NotBlank(message = "Opis nie może być pusty")
-    @Length(max = 1000, message = "Opis nie może być dłuższy niż 1000 znaków")
+    @Length(max = 1000, message = "Opis nie może być dłuższy niż 5 000 znaków")
     private String description;
 
     @Transient
