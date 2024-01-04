@@ -1,114 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="~{layout}" lang="pl">
 <head>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script>
-        function validateForm() {
-            if (!validateFileSize()) {
-                return false;
-            }
-
-            if (!validateIntegerFields()) {
-                return false;
-            }
-            return true;
-        }
-        function validateFileSize() {
-            var fileInput = document.getElementById('file');
-            var file = fileInput.files[0];
-
-            if (file && file.size > 5 * 1024 * 1024) {
-                alert('Plik jest za duży. Maksymalny rozmiar to 5 MB.');
-                return false;
-            }
-
-            return true;
-        }
-        function validateIntegerFields() {
-            var maxHeadcount = document.getElementById("maxHeadcount").value;
-            var cabinsNumber = document.getElementById("cabinsNumber").value;
-            var enginePower = document.getElementById("enginePower").value;
-
-            var maxIntegerValue = 2147483647;
-            var minIntegerValue = -2147483648;
-
-            if (!isIntegerInRange(maxHeadcount, minIntegerValue, maxIntegerValue) ||
-                !isIntegerInRange(cabinsNumber, minIntegerValue, maxIntegerValue) ||
-                !isIntegerInRange(enginePower, minIntegerValue, maxIntegerValue)) {
-                alert("Jedna lub więcej wprowadzonych wartości liczbowych jest nieprawidłowa.");
-                return false;
-            }
-
-            return true;
-        }
-        function isIntegerInRange(value, min, max) {
-            var number = parseInt(value);
-            return !isNaN(number) && number >= min && number <= max;
-        }
-    </script>
+    <script src="/js/boatValidation.js"></script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
-    <h2>Rejestracja nowej łodzi</h2>
-    <form th:action="@{/boats/add}" th:object="${boat}" method="post" class="offers-section" enctype="multipart/form-data" onsubmit="return validateForm()">
-        <div class="form-group">
-            <label for="file">Obraz łodzi:</label>
-            <input type="file" id="file" name="file" accept="image/jpeg, image/png" required/>
-        </div>
-        <div class="form-group">
-            <label for="name">Nazwa:</label>
-            <input type="text" id="name" th:field="*{name}" class="form-control" required />
-            <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="type">Typ:</label>
-            <select id="type" th:field="*{type}" class="form-control">
-                <option value="SAILBOAT">Żaglowy</option>
-                <option value="MOTORBOAT">Motorowy</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="model">Model:</label>
-            <input type="text" id="model" th:field="*{model}" class="form-control" required />
-            <div th:if="${#fields.hasErrors('model')}" class="alert alert-danger" th:errors="*{model}"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="maxHeadcount">Maksymalna liczba osób:</label>
-            <input type="number" id="maxHeadcount" th:field="*{maxHeadcount}" class="form-control" min="1" required />
-            <div th:if="${#fields.hasErrors('maxHeadcount')}" class="alert alert-danger" th:errors="*{maxHeadcount}"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="cabinsNumber">Liczba kabin:</label>
-            <input type="number" id="cabinsNumber" th:field="*{cabinsNumber}" class="form-control" min="1" required />
-            <div th:if="${#fields.hasErrors('cabinsNumber')}" class="alert alert-danger" th:errors="*{cabinsNumber}"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="prodYear">Rok produkcji:</label>
-            <input type="number" id="prodYear" th:field="*{prodYear}" class="form-control" min="1900" max="2023" required />
-            <div th:if="${#fields.hasErrors('prodYear')}" class="alert alert-danger" th:errors="*{prodYear}"></div>
-        </div>
-
-        <div class="form-group">
-            <label for="enginePower">Moc silnika (KM):</label>
-            <input type="number" id="enginePower" th:field="*{enginePower}" class="form-control" min="1" required />
-            <div th:if="${#fields.hasErrors('enginePower')}" class="alert alert-danger" th:errors="*{enginePower}"></div>
-        </div>
-
-        <div>
+    <h2>Dodaj łódź</h2>
+    <form th:action="@{/boats/add}" th:object="${boat}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div th:replace="~{boats/fragments/form :: boatFormFields(${boat})}"></div>
+        <div class="mt-3">
             <button type="button" onclick="window.history.back()" class="btn btn-secondary">Wróć</button>
-            <input type="submit" value="Zarejestruj łódź" class="btn btn-primary" />
+            <input type="submit" value="Dodaj łódź" class="btn btn-primary"/>
         </div>
     </form>
 </section>
-
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 </body>
 </html>
