@@ -2,41 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
     <script>
-        function goBack() {
-            window.history.back();
-        }
         function toggleCompanyFields() {
             var isCompanySelected = document.getElementById("isCompany").value === 'true';
             document.getElementById("companyFields").style.display = isCompanySelected ? "block" : "none";
         }
-        document.addEventListener("DOMContentLoaded", function() {
-            var password = document.getElementById("password");
-            var confirmPassword = document.getElementById("confirmPassword");
-            var validationMessage = document.getElementById("validationMessage");
-
-            function validatePassword() {
-                if (password.value !== confirmPassword.value) {
-                    validationMessage.textContent = "Hasła nie są identyczne.";
-                } else {
-                    validationMessage.textContent = "";
-                }
-            }
-
-            password.addEventListener("keyup", validatePassword);
-            confirmPassword.addEventListener("keyup", validatePassword);
-        });
-
-        function validatePassword() {
-            var newPassword = document.getElementById("password").value;
-            var confirmPassword = document.getElementById("confirmPassword").value;
-
-            if (newPassword !== confirmPassword) {
-                alert("Hasła nie są identyczne.");
-                return false;
-            }
-            return true;
-        }
     </script>
+    <script src="/js/passwordValidation.js"></script>
 </head>
 <body onload="toggleCompanyFields()">
 <section layout:fragment="content" class="offers-section">
@@ -110,7 +81,7 @@
             </div>
         </div>
         <div>
-            <button type="button" onclick="goBack()" class="btn btn-secondary">Wróć</button>
+            <button type="button" onclick="window.history.back()" class="btn btn-secondary">Wróć</button>
             <input type="submit" value="Zarejestruj się" class="btn btn-primary" />
         </div>
     </form>

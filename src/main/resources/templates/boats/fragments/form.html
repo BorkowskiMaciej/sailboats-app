@@ -3,9 +3,10 @@
 <body>
 <div th:fragment="boatFormFields(boat)">
   <div class="form-group">
-    <label for="file">Obraz łodzi:</label>
+    <label for="file">Obraz łodzi (max 5 MB):</label>
     <input type="file" id="file" name="file" accept="image/jpeg, image/png" required/>
   </div>
+
   <div class="form-group">
     <label for="name">Nazwa:</label>
     <input type="text" id="name" th:field="*{name}" class="form-control" required />

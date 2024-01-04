@@ -39,7 +39,7 @@ public class UserController {
 
     @PostMapping("/change-password")
     public String changePassword(
-            @RequestParam("newPassword") String newPassword,
+            @RequestParam("password") String newPassword,
             Principal principal,
             RedirectAttributes redirectAttributes) {
         String username = principal.getName();

@@ -1,40 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function() {
-            var newPassword = document.getElementById("newPassword");
-            var confirmPassword = document.getElementById("confirmPassword");
-            var validationMessage = document.getElementById("validationMessage");
-
-            function validatePassword() {
-                if (newPassword.value !== confirmPassword.value) {
-                    validationMessage.textContent = "Hasła nie są identyczne.";
-                } else {
-                    validationMessage.textContent = "";
-                }
-            }
-
-            newPassword.addEventListener("keyup", validatePassword);
-            confirmPassword.addEventListener("keyup", validatePassword);
-        });
-
-        function validatePassword() {
-            var newPassword = document.getElementById("newPassword").value;
-            var confirmPassword = document.getElementById("confirmPassword").value;
-
-            if (newPassword !== confirmPassword) {
-                alert("Hasła nie są identyczne.");
-                return false;
-            }
-            return true;
-        }
-
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+    <script src="/js/passwordValidation.js"></script>
     <script src="/js/successAlertTimeout.js"></script>
+    <script src="/js/errorAlertTimeout.js"></script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
@@ -47,8 +16,8 @@
         </div>
         <div th:if="${error}" id="errorAlert" class="alert alert-danger" th:text="${error}"></div>
         <div class="form-group">
-            <label for="newPassword">Nowe hasło:</label>
-            <input type="password" id="newPassword" name="newPassword" class="form-control" required />
+            <label for="password">Nowe hasło:</label>
+            <input type="password" id="password" name="password" class="form-control" required />
         </div>
         <div class="form-group">
             <label for="confirmPassword">Potwierdź nowe hasło:</label>
@@ -56,7 +25,7 @@
         </div>
         <div id="validationMessage" style="color: red;"></div>
         <div>
-            <button type="button" onclick="goBack()" class="btn btn-secondary">Wróć</button>
+            <button type="button" onclick="window.history.back()" class="btn btn-secondary">Wróć</button>
             <input type="submit" value="Zresetuj hasło" class="btn btn-primary"/>
         </div>
     </form>

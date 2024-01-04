@@ -143,7 +143,7 @@ public class AuthenticationController {
     @PostMapping("/reset-password")
     public String resetPassword(
             @RequestParam("resetCode") String resetCode,
-            @RequestParam("newPassword") String newPassword,
+            @RequestParam("password") String newPassword,
             Model model) {
 
         Optional<AppUser> user = userService.findByResetPasswordCode(resetCode);
