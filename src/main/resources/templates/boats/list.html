@@ -24,7 +24,7 @@
     </thead>
     <tbody>
     <tr th:each="boat : ${boats}">
-      <td><img th:src="@{'boats/image/' + ${boat.id}}" alt="Obraz łodzi" style="width:100px;height:auto;"/></td>
+      <td><img th:src="@{'/boats/image/' + ${boat.id}}" alt="Obraz łodzi" style="width:100px;height:auto;"/></td>
       <td th:text="${#strings.length(boat.name) > 15 ? #strings.substring(boat.name, 0, 15) + '...' : boat.name}"></td>
       <td th:text="${boat.type.name() == 'SAILBOAT' ? 'Żaglowy' : 'Motorowy'}"></td>
       <td th:text="${#strings.length(boat.model) > 15 ? #strings.substring(boat.model, 0, 15) + '...' : boat.model}"></td>
@@ -45,7 +45,8 @@
     </tbody>
   </table>
   <div>
-    <a th:href="@{/boats/add}" class="btn btn-success">Dodaj nową łódkę</a>
+    <a th:if="${T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'OWNER')}"
+       th:href="@{/boats/add}" class="btn btn-success">Dodaj nową łódkę</a>
   </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

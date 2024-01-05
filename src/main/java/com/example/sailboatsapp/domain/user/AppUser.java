@@ -1,4 +1,4 @@
-package com.example.sailboatsapp.domain.user.entity;
+package com.example.sailboatsapp.domain.user;
 
 import com.example.sailboatsapp.domain.boat.entity.Boat;
 import com.example.sailboatsapp.domain.offer.Offer;

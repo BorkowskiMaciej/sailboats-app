@@ -1,7 +1,7 @@
 package com.example.sailboatsapp.application;
 
 import com.example.sailboatsapp.domain.user.UserService;
-import com.example.sailboatsapp.domain.user.entity.AppUser;
+import com.example.sailboatsapp.domain.user.AppUser;
 import com.example.sailboatsapp.security.LoginService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +22,12 @@ public class UserController {
 
     private final UserService userService;
     private final LoginService loginService;
+
+    @GetMapping("/all")
+    public String showUserList(Model model) {
+        model.addAttribute("users", userService.findAll());
+        return "user/list";
+    }
 
     @GetMapping
     public String showAccount(Model model, @AuthenticationPrincipal UserDetails currentUser) {
@@ -79,5 +85,11 @@ public class UserController {
         String username = principal.getName();
         userService.deleteUser(username);
         return "redirect:/logout";
+    }
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        userService.deleteUser(id);
+        redirectAttributes.addFlashAttribute("successMessage", "Użytkownik został usunięty.");
+        return "redirect:/account/all";
     }
 }

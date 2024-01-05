@@ -1,7 +1,7 @@
 package com.example.sailboatsapp.domain.offer;
 
 import com.example.sailboatsapp.domain.boat.entity.Boat;
-import com.example.sailboatsapp.domain.user.entity.AppUser;
+import com.example.sailboatsapp.domain.user.AppUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

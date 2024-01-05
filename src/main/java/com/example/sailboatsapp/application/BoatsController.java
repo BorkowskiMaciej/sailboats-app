@@ -34,6 +34,14 @@ public class BoatsController {
         return "boats/list";
     }
 
+    @GetMapping("/all")
+    public String listAllBoats(Model model) {
+        List<Boat> boats = boatService.findAll();
+        model.addAttribute("boats", boats);
+        return "boats/list";
+    }
+
+
     @GetMapping("/add")
     public String showAddBoatForm(Model model) {
         model.addAttribute("boat", new Boat());

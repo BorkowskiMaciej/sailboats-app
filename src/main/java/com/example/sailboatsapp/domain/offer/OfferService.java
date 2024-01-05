@@ -29,7 +29,7 @@ public class OfferService {
                 .collect(Collectors.toList());
     }
 
-    private List<Offer> findAllWithUserAndBoat() {
+    public List<Offer> findAllWithUserAndBoat() {
         return offerRepository.findAll()
                 .stream().peek(offer -> {
                     offer.setBoat(boatService.findById(offer.getBoatId()));

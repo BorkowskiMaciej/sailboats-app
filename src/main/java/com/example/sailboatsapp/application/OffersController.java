@@ -35,6 +35,13 @@ public class OffersController {
         return "offers/list";
     }
 
+    @GetMapping("/all")
+    public String showAllOffers(Model model) {
+        List<Offer> offers = offerService.findAllWithUserAndBoat();
+        model.addAttribute("offers", offers);
+        return "offers/list";
+    }
+
     @GetMapping("/show/{offerId}")
     public String showOfferDetails(@PathVariable Long offerId, Model model) {
         Offer offer = offerService.findWithUserAndBoat(offerId);

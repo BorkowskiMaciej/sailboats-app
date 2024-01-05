@@ -1,7 +1,7 @@
 package com.example.sailboatsapp.domain.reservation;
 
 import com.example.sailboatsapp.domain.offer.Offer;
-import com.example.sailboatsapp.domain.user.entity.AppUser;
+import com.example.sailboatsapp.domain.user.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
 

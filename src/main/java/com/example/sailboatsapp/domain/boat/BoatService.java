@@ -19,6 +19,9 @@ public class BoatService {
     public List<Boat> findAllByOwnerId(Long ownerId) {
         return boatRepository.findAllByOwnerId(ownerId);
     }
+    public List<Boat> findAll() {
+        return boatRepository.findAll();
+    }
 
     public Boat findById(Long boatId) {
         return boatRepository.findById(boatId).orElseThrow();

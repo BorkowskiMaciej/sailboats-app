@@ -1,6 +1,5 @@
 package com.example.sailboatsapp.domain.user;
 
-import com.example.sailboatsapp.domain.user.entity.AppUser;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -8,6 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -91,6 +91,15 @@ public class UserService {
 
     public void deleteUser(String username) {
         userRepository.deleteByUsername(username);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+
+    public List<AppUser> findAll() {
+        return userRepository.findAll();
     }
 
 }
