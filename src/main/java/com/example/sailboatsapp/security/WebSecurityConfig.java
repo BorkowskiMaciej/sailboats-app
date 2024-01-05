@@ -21,7 +21,10 @@ public class WebSecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                         .requestMatchers("/","/auth/*", "/style.css", "/css/**", "/js/**", "/images/**",
                                  "boats/image/*", "/offers/show/**").permitAll()
-                        .requestMatchers( "/boats/**", "/offers/**", "reservations/hosted").hasAnyAuthority("OWNER", "ADMIN")
+                        .requestMatchers( "/boats/all", "/offers/all", "/account/all", "/account/delete/*").hasAuthority("ADMIN")
+                        .requestMatchers( "/boats/update/*", "/offers/update/*",
+                                "/boats/delete/*", "/offers/delete/*").hasAnyAuthority("ADMIN", "OWNER")
+                        .requestMatchers( "/boats", "/offers", "reservations/hosted").hasAnyAuthority("OWNER")
                         .requestMatchers( "/reservations/booked").hasAnyAuthority("USER")
                         .anyRequest().authenticated())
                 .formLogin(form -> form

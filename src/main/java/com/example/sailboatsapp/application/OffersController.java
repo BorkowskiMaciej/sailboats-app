@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,8 +68,9 @@ public class OffersController {
             Model model,
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
-            RedirectAttributes redirectAttributes) {
-        return processOffer(offer, bindingResult, model, startDate, endDate, redirectAttributes, true);
+            RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal UserDetails currentUser) {
+        return processOffer(offer, bindingResult, model, startDate, endDate, redirectAttributes, true, currentUser);
     }
 
     @GetMapping("/update/{id}")
@@ -87,14 +90,19 @@ public class OffersController {
             Model model,
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
-            RedirectAttributes redirectAttributes) {
-        return processOffer(offer, bindingResult, model, startDate, endDate, redirectAttributes, false);
+            RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal UserDetails currentUser) {
+        return processOffer(offer, bindingResult, model, startDate, endDate, redirectAttributes, true, currentUser);
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteBoat(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public String deleteBoat(@PathVariable("id") Long id, RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal UserDetails currentUser) {
         offerService.deleteOffer(id);
         redirectAttributes.addFlashAttribute("successMessage", "Oferta została usunięta.");
+        if (currentUser.getAuthorities().stream().findFirst().orElseThrow().getAuthority().equals("ADMIN")) {
+            return "redirect:/offers/all";
+        }
         return "redirect:/offers";
     }
 
@@ -105,7 +113,7 @@ public class OffersController {
 
     private String processOffer(Offer offer, BindingResult bindingResult, Model model,
             LocalDate startDate, LocalDate endDate,
-            RedirectAttributes redirectAttributes, boolean isNew) {
+            RedirectAttributes redirectAttributes, boolean isNew, UserDetails currentUser) {
         validateOfferDates(offer, bindingResult, startDate, endDate);
 
         if (bindingResult.hasErrors()) {
@@ -118,6 +126,9 @@ public class OffersController {
         offer.setOwnerId(userService.getAuthenticatedUserId());
         offerService.addOrUpdateOffer(offer);
         redirectAttributes.addFlashAttribute("successMessage", isNew ? "Oferta dodana." : "Oferta zaktualizowana.");
+        if (currentUser.getAuthorities().stream().findFirst().orElseThrow().getAuthority().equals("ADMIN")) {
+            return "redirect:/offers/all";
+        }
         return "redirect:/offers";
     }
 

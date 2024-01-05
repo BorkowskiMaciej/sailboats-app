@@ -3,11 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <script>
-        function confirmAccountDeletion() {
-            if (confirm("Czy na pewno chcesz usunąć swoje konto?")) {
-                window.location.href = '/account/delete';
-            }
-        }
         function toggleCompanyFields() {
             var isCompanySelected = document.getElementById("isCompany").value === 'true';
             var companyFields = document.getElementById("companyFields").querySelectorAll('input, select, textarea');
@@ -86,9 +81,12 @@
                     <div th:if="${#fields.hasErrors('address')}" class="alert alert-danger" th:errors="*{address}"></div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-            <a href="account/change-password" class="btn btn-secondary">Zmień hasło</a>
-            <button type="button" class="btn btn-danger" onclick="confirmAccountDeletion()">Usuń konto</button>
+                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+                <a href="account/change-password" class="btn btn-secondary">Zmień hasło</a>
+        </form>
+        <form th:action="@{/account/delete}" method="post">
+            <input type="hidden" name="_method" value="DELETE"/>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć swoje konto?')">Usuń konto</button>
         </form>
     </section>
 </main>

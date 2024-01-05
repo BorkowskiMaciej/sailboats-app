@@ -80,7 +80,7 @@ public class UserController {
         return "user/changePassword";
     }
 
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String deleteAccount(Principal principal) {
         String username = principal.getName();
         userService.deleteUser(username);

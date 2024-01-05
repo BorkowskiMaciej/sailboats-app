@@ -9,6 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -67,12 +70,16 @@ public class BoatsController {
 
     @PostMapping("/update/{id}")
     public String updateBoat(@PathVariable("id") Long id, @Valid Boat boat, BindingResult result,
-            @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+            @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal UserDetails currentUser) {
         boat.setId(id);
         if (processBoatAndImage(boat, result, file)) {
             return "boats/edit";
         }
         redirectAttributes.addFlashAttribute("successMessage", "Łódź została zaktualizowana.");
+        if (currentUser.getAuthorities().stream().findFirst().orElseThrow().getAuthority().equals("ADMIN")) {
+            return "redirect:/boats/all";
+        }
         return "redirect:/boats";
     }
 
@@ -88,9 +95,13 @@ public class BoatsController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteBoat(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+    public String deleteBoat(@PathVariable("id") Long id, RedirectAttributes redirectAttributes,
+            @AuthenticationPrincipal UserDetails currentUser) {
         boatService.deleteBoat(id);
         redirectAttributes.addFlashAttribute("successMessage", "Łódź została usunięta.");
+        if (currentUser.getAuthorities().stream().findFirst().orElseThrow().getAuthority().equals("ADMIN")) {
+            return "redirect:/boats/all";
+        }
         return "redirect:/boats";
     }
 
