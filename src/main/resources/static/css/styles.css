@@ -38,6 +38,20 @@ body {
     display: block;
 }
 
+.dropdown-item,
+.dropdown-item form,
+.dropdown-item a {
+    display: block;
+    padding: 0.5rem 1rem;
+    clear: both;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background: none;
+    border: 0;
+    text-decoration: none;
+}
+
 .navbar {
     position: relative;
 }
@@ -322,6 +336,7 @@ form-group {
     margin-bottom: 15px;
 }
 
+
 .form-group label {
     display: block;
     color: #666;
@@ -399,4 +414,5 @@ form-group {
 .text-right {
     text-align: right;
 }
+
 
