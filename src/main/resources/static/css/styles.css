@@ -147,8 +147,8 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    display: flex; /* Ustawienie flexbox dla elementu body */
-    flex-direction: column; /* Ustawienie kierunku flexbox na pionowy */
+    display: flex;
+    flex-direction: column;
     flex: 1 0 auto;
 }
 
@@ -160,7 +160,7 @@ html, body {
 }
 
 main {
-    flex-grow: 1; /* Pozwoli na wypełnienie dostępnym miejscem między nagłówkiem a stopką */
+    flex-grow: 1;
 }
 
 
@@ -245,8 +245,6 @@ footer {
     color: #007bff;
 }
 
-/* buttons */
-
 .button {
     font-size: 16px;
     text-decoration: none;
@@ -307,9 +305,6 @@ footer {
     background-color: #5a6268;
 }
 
-
-/* alerts */
-
 .alert {
     position: relative;
     padding: 0.75rem 1.25rem;
@@ -329,8 +324,6 @@ footer {
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
-
-/* forms */
 
 form-group {
     margin-bottom: 15px;
@@ -360,13 +353,6 @@ form-group {
     background-color: #e9e9e9;
     color: #646464;
 }
-
-
-
-
-
-
-
 
 .container {
     max-width: 1200px;
