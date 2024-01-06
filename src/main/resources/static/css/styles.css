@@ -110,12 +110,12 @@ main {
     padding: 1rem;
 }
 
-.offers-section {
+.main-section {
     padding: 20px;
     background-color: #f8f9fa;
 }
 
-.offers-section h2 {
+.main-section h2 {
     margin-bottom: 20px;
 }
 
@@ -188,16 +188,16 @@ nav .logo {
 }
 
 
-.offers-section {
+.main-section {
     padding: 20px;
 }
-.offers-section .offer {
+.main-section .offer {
     border: 1px solid #ddd;
     padding: 10px;
     margin-bottom: 10px;
 }
 
-.offers-section .offer img {
+.main-section .offer img {
     max-width: 100%;
     height: auto;
 }

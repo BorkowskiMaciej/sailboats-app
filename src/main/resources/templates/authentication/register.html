@@ -10,9 +10,9 @@
     <script src="/js/passwordValidation.js"></script>
 </head>
 <body onload="toggleCompanyFields()">
-<section layout:fragment="content" class="offers-section">
+<section layout:fragment="content" class="main-section">
     <h2>Zarejestruj się</h2>
-    <form th:action="@{/auth/register}" th:object="${appUser}" method="post" onsubmit="return validatePassword()" class="offers-section">
+    <form th:action="@{/auth/register}" th:object="${appUser}" method="post" onsubmit="return validatePassword()" class="main-section">
         <div class="form-group">
             <label for="username">Nazwa użytkownika:</label>
             <input type="text" id="username" th:field="*{username}" class="form-control"

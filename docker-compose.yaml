@@ -1,7 +1,6 @@
 version: '3.8'
 services:
   sailboats-app:
-    image: borkowskimaciej/sailboats-app:latest
     build: .
     ports:
       - "8080:8080"

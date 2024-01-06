@@ -25,8 +25,8 @@ public class EmailService {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(senderEmailAddress);
             message.setTo(to);
-            message.setSubject("[Sailboats] Potwierdzenie rejestracji");
-            message.setText("Twój kod potwierdzający to: " + code);
+            message.setSubject("[BoroJacht] Aktywacja konta");
+            message.setText("Twój kod aktywujący to: " + code);
             emailSender.send(message);
         }
         catch (Exception e) {
@@ -39,7 +39,7 @@ public class EmailService {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(senderEmailAddress);
             message.setTo(to);
-            message.setSubject("[Sailboats] Kod resetowania hasła");
+            message.setSubject("[BoroJacht] Kod resetowania hasła");
             message.setText( "Twój kod resetowania hasła to: " + code);
             emailSender.send(message);
         }

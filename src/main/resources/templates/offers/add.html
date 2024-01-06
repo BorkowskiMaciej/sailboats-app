@@ -5,7 +5,7 @@
     <script src="/js/offerValidation.js"></script>
 </head>
 <body>
-<section layout:fragment="content" class="offers-section">
+<section layout:fragment="content" class="main-section">
     <h2>Dodaj ofertę</h2>
     <form th:action="@{/offers/new}" th:object="${offer}" method="post" onsubmit="return validateIntegerFields()">
         <div th:replace="~{offers/fragments/form :: formFields(${offer}, ${userBoats})}"></div>

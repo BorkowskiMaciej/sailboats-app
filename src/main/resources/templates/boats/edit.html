@@ -7,7 +7,7 @@
 </head>
 <body>
 <main>
-    <section layout:fragment="content" class="offers-section">
+    <section layout:fragment="content" class="main-section">
         <h2>Edycja łodzi</h2>
         <form id="editBoatForm" th:action="@{/boats/update/{id}(id=${boat.id})}" th:object="${boat}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
             <div th:replace="~{boats/fragments/form :: boatFormFields(${boat})}"></div>

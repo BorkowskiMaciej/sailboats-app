@@ -25,7 +25,7 @@
 </head>
 <body>
 <main>
-    <section layout:fragment="content" class="offers-section">
+    <section layout:fragment="content" class="main-section">
         <h2>Dane użytkownika</h2>
         <div th:if="${successMessage}" class="alert alert-green" id="successAlert" th:text="${successMessage}"></div>
         <form id="userForm" th:action="@{/account/update}" th:object="${user}" method="post">

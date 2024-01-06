@@ -6,7 +6,7 @@
 </head>
 <body>
 <main>
-  <section layout:fragment="content" class="offers-section">
+  <section layout:fragment="content" class="main-section">
     <h2>Edycja oferty</h2>
     <form id="editOfferForm" th:action="@{/offers/update/{id}(id=${offer.id})}" th:object="${offer}" method="post" onsubmit="return validateIntegerFields()">
       <div th:replace="~{offers/fragments/form :: formFields(${offer}, ${userBoats})}"></div>

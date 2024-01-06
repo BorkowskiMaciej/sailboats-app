@@ -5,7 +5,7 @@
     <script src="/js/boatValidation.js"></script>
 </head>
 <body>
-<section layout:fragment="content" class="offers-section">
+<section layout:fragment="content" class="main-section">
     <h2>Dodaj łódź</h2>
     <form th:action="@{/boats/add}" th:object="${boat}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div th:replace="~{boats/fragments/form :: boatFormFields(${boat})}"></div>
