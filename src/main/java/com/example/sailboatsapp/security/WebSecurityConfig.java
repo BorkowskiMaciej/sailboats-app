@@ -24,8 +24,8 @@ public class WebSecurityConfig {
                         .requestMatchers( "/boats/all", "/offers/all", "/account/all", "/account/delete/*").hasAuthority("ADMIN")
                         .requestMatchers( "/boats/update/*", "/offers/update/*",
                                 "/boats/delete/*", "/offers/delete/*").hasAnyAuthority("ADMIN", "OWNER")
-                        .requestMatchers( "/boats", "/offers", "reservations/hosted").hasAnyAuthority("OWNER")
-                        .requestMatchers( "/reservations/booked").hasAnyAuthority("USER")
+                        .requestMatchers( "/boats", "/offers", "reservations/hosted").hasAuthority("OWNER")
+                        .requestMatchers( "/reservations/booked").hasAuthority("USER")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/auth/login")
