@@ -3,7 +3,6 @@
       lang="pl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="/js/boatValidation.js"></script>
 </head>
 <body>
@@ -12,15 +11,12 @@
         <h2>Edycja łodzi</h2>
         <form id="editBoatForm" th:action="@{/boats/update/{id}(id=${boat.id})}" th:object="${boat}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
             <div th:replace="~{boats/fragments/form :: boatFormFields(${boat})}"></div>
-            <div class="mt-3">
-                <button type="button" onclick="window.history.back()" class="btn btn-secondary">Wróć</button>
-                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+            <div class="buttons">
+                <button type="button" onclick="window.history.back()" class="button btn-grey">Wróć</button>
+                <button type="submit" class="button btn-blue">Zapisz zmiany</button>
             </div>
         </form>
     </section>
 </main>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

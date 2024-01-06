@@ -27,7 +27,7 @@
 <main>
     <section layout:fragment="content" class="offers-section">
         <h2>Dane użytkownika</h2>
-        <div th:if="${successMessage}" class="alert alert-success" id="successAlert" th:text="${successMessage}"></div>
+        <div th:if="${successMessage}" class="alert alert-green" id="successAlert" th:text="${successMessage}"></div>
         <form id="userForm" th:action="@{/account/update}" th:object="${user}" method="post">
             <div class="form-group">
                 <label for="username">Nazwa użytkownika:</label>
@@ -44,17 +44,17 @@
             <div class="form-group">
                 <label for="name">Imię:</label>
                 <input type="text" id="name" th:field="*{name}" class="form-control" required/>
-                <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></div>
+                <div th:if="${#fields.hasErrors('name')}" class="alert alert-red" th:errors="*{name}"></div>
             </div>
             <div class="form-group">
                 <label for="surname">Nazwisko:</label>
                 <input type="text" id="surname" th:field="*{surname}" class="form-control" required/>
-                <div th:if="${#fields.hasErrors('surname')}" class="alert alert-danger" th:errors="*{surname}"></div>
+                <div th:if="${#fields.hasErrors('surname')}" class="alert alert-red" th:errors="*{surname}"></div>
             </div>
             <div class="form-group">
                 <label for="phoneNumber">Numer telefonu:</label>
                 <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" required/>
-                <div th:if="${#fields.hasErrors('phoneNumber')}" class="alert alert-danger" th:errors="*{phoneNumber}"></div>
+                <div th:if="${#fields.hasErrors('phoneNumber')}" class="alert alert-red" th:errors="*{phoneNumber}"></div>
             </div>
             <div class="form-group">
                 <label for="isCompany">Czy firma:</label>
@@ -68,25 +68,27 @@
                 <div class="form-group">
                     <label for="companyName">Nazwa firmy:</label>
                     <input type="text" id="companyName" th:field="*{companyName}" class="form-control"/>
-                    <div th:if="${#fields.hasErrors('companyName')}" class="alert alert-danger" th:errors="*{companyName}"></div>
+                    <div th:if="${#fields.hasErrors('companyName')}" class="alert alert-red" th:errors="*{companyName}"></div>
                 </div>
                 <div class="form-group">
                     <label for="tin">NIP:</label>
                     <input type="text" id="tin" th:field="*{tin}" class="form-control"/>
-                    <div th:if="${#fields.hasErrors('tin')}" class="alert alert-danger" th:errors="*{tin}"></div>
+                    <div th:if="${#fields.hasErrors('tin')}" class="alert alert-red" th:errors="*{tin}"></div>
                 </div>
                 <div class="form-group">
                     <label for="address">Adres:</label>
                     <input type="text" id="address" th:field="*{address}" class="form-control"/>
-                    <div th:if="${#fields.hasErrors('address')}" class="alert alert-danger" th:errors="*{address}"></div>
+                    <div th:if="${#fields.hasErrors('address')}" class="alert alert-red" th:errors="*{address}"></div>
                 </div>
             </div>
-                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
-                <a href="account/change-password" class="btn btn-secondary">Zmień hasło</a>
+            <div class="buttons">
+                <button type="submit" form="userForm" class="button btn-blue">Zapisz zmiany</button>
+                <a href="account/change-password" class="button btn-grey">Zmień hasło</a>
+                <button type="submit" form="deleteForm" class="button btn-red" onclick="return confirm('Czy na pewno chcesz usunąć swoje konto?')">Usuń konto</button>
+            </div>
         </form>
-        <form th:action="@{/account/delete}" method="post">
+        <form id="deleteForm" th:action="@{/account/delete}" method="post">
             <input type="hidden" name="_method" value="DELETE"/>
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć swoje konto?')">Usuń konto</button>
         </form>
     </section>
 </main>

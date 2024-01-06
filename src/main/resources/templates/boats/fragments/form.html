@@ -10,7 +10,7 @@
   <div class="form-group">
     <label for="name">Nazwa:</label>
     <input type="text" id="name" th:field="*{name}" class="form-control" required />
-    <div th:if="${#fields.hasErrors('name')}" class="alert alert-danger" th:errors="*{name}"></div>
+    <div th:if="${#fields.hasErrors('name')}" class="alert alert-red" th:errors="*{name}"></div>
   </div>
 
   <div class="form-group">
@@ -24,31 +24,31 @@
   <div class="form-group">
     <label for="model">Model:</label>
     <input type="text" id="model" th:field="*{model}" class="form-control" required />
-    <div th:if="${#fields.hasErrors('model')}" class="alert alert-danger" th:errors="*{model}"></div>
+    <div th:if="${#fields.hasErrors('model')}" class="alert alert-red" th:errors="*{model}"></div>
   </div>
 
   <div class="form-group">
     <label for="maxHeadcount">Maksymalna liczba osób:</label>
     <input type="number" id="maxHeadcount" th:field="*{maxHeadcount}" class="form-control" required />
-    <div th:if="${#fields.hasErrors('maxHeadcount')}" class="alert alert-danger" th:errors="*{maxHeadcount}"></div>
+    <div th:if="${#fields.hasErrors('maxHeadcount')}" class="alert alert-red" th:errors="*{maxHeadcount}"></div>
   </div>
 
   <div class="form-group">
     <label for="cabinsNumber">Liczba kabin:</label>
     <input type="number" id="cabinsNumber" th:field="*{cabinsNumber}" class="form-control" required />
-    <div th:if="${#fields.hasErrors('cabinsNumber')}" class="alert alert-danger" th:errors="*{cabinsNumber}"></div>
+    <div th:if="${#fields.hasErrors('cabinsNumber')}" class="alert alert-red" th:errors="*{cabinsNumber}"></div>
   </div>
 
   <div class="form-group">
     <label for="prodYear">Rok produkcji:</label>
     <input type="number" id="prodYear" th:field="*{prodYear}" class="form-control" required />
-    <div th:if="${#fields.hasErrors('prodYear')}" class="alert alert-danger" th:errors="*{prodYear}"></div>
+    <div th:if="${#fields.hasErrors('prodYear')}" class="alert alert-red" th:errors="*{prodYear}"></div>
   </div>
 
   <div class="form-group">
     <label for="enginePower">Moc silnika (KM):</label>
     <input type="number" id="enginePower" th:field="*{enginePower}" class="form-control" required />
-    <div th:if="${#fields.hasErrors('enginePower')}" class="alert alert-danger" th:errors="*{enginePower}"></div>
+    <div th:if="${#fields.hasErrors('enginePower')}" class="alert alert-red" th:errors="*{enginePower}"></div>
   </div>
 </div>
 </body>

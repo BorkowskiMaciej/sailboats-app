@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml"  lang="pl">
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="/js/successAlertTimeout.js"></script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
   <h2>Lista łódek</h2>
-  <div th:if="${successMessage}" class="alert alert-success" id="successAlert" th:text="${successMessage}"></div>
+  <div th:if="${successMessage}" class="alert alert-green" id="successAlert" th:text="${successMessage}"></div>
   <table class="table table-hover">
     <thead class="thead-dark">
     <tr>
@@ -35,23 +34,19 @@
       <td>
         <div>
           <form th:action="@{/boats/delete/{id}(id=${boat.id})}" method="post">
-            <a th:href="@{/boats/update/{id}(id=${boat.id})}" class="btn btn-sm btn-primary">Edytuj</a>
+            <a th:href="@{/boats/update/{id}(id=${boat.id})}" class="button btn-blue">Edytuj</a>
             <input type="hidden" name="_method" value="DELETE" />
-            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć tę łódkę?')">Usuń</button>
+            <button type="submit" class="button btn-red" onclick="return confirm('Czy na pewno chcesz usunąć tę łódkę?')">Usuń</button>
           </form>
         </div>
       </td>
     </tr>
     </tbody>
   </table>
-  <div>
+  <div class="buttons">
     <a th:if="${T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'OWNER')}"
-       th:href="@{/boats/add}" class="btn btn-success">Dodaj nową łódkę</a>
+       th:href="@{/boats/add}" class="button btn-green">Dodaj nową łódkę</a>
   </div>
 </section>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
 </body>
 </html>

@@ -3,13 +3,12 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="/js/successAlertTimeout.js"></script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
     <h2>Lista ofert</h2>
-    <div th:if="${successMessage}" class="alert alert-success" id="successAlert" th:text="${successMessage}"></div>
+    <div th:if="${successMessage}" class="alert alert-green" id="successAlert" th:text="${successMessage}"></div>
     <table class="table table-hover">
         <thead class="thead-dark">
         <tr>
@@ -19,7 +18,6 @@
             <th>Kaucja (zł)</th>
             <th>Data rozpoczęcia</th>
             <th>Data zakończenia</th>
-            <th>Opis</th>
             <th>Akcje</th>
         </tr>
         </thead>
@@ -31,15 +29,14 @@
             <td th:text="${offer.deposit}"></td>
             <td th:text="${offer.startDate}"></td>
             <td th:text="${offer.endDate}"></td>
-            <td th:text="${#strings.length(offer.description) > 15 ? #strings.substring(offer.description, 0, 15) + '...' : offer.description}"></td>
             <td>
                 <div>
                     <form th:action="@{/offers/delete/{id}(id=${offer.id})}" method="post">
-                        <a th:href="@{/offers/show/{id}(id=${offer.id})}" class="btn btn-sm btn-primary">Zobacz
+                        <a th:href="@{/offers/show/{id}(id=${offer.id})}" class="button btn-blue">Zobacz
                             szczegóły</a>
-                        <a th:href="@{/offers/update/{id}(id=${offer.id})}" class="btn btn-sm btn-secondary">Edytuj</a>
+                        <a th:href="@{/offers/update/{id}(id=${offer.id})}" class="button btn-grey">Edytuj</a>
                         <input type="hidden" name="_method" value="DELETE"/>
-                        <button type="submit" class="btn btn-sm btn-danger"
+                        <button type="submit" class="button btn-red"
                                 onclick="return confirm('Czy na pewno chcesz usunąć ofertę?')">Wycofaj
                         </button>
                     </form>
@@ -48,13 +45,10 @@
         </tr>
         </tbody>
     </table>
-    <div>
+    <div class="buttons">
         <a th:if="${T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'OWNER')}"
-           th:href="@{/offers/new}" class="btn btn-success">Dodaj nową ofertę</a>
+           th:href="@{/offers/new}" class="button btn-green">Dodaj nową ofertę</a>
     </div>
 </section>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

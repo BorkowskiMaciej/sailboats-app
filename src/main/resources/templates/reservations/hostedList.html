@@ -2,13 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="pl" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script src="/js/successAlertTimeout.js"></script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
   <h2>Moje rezerwacje</h2>
-  <div th:if="${successMessage}" class="alert alert-success" id="successAlert" th:text="${successMessage}"></div>
+  <div th:if="${successMessage}" class="alert alert-green" id="successAlert" th:text="${successMessage}"></div>
   <table class="table table-hover">
     <thead class="thead-dark">
     <tr>
@@ -28,18 +27,15 @@
       <td th:text="${reservation.offer.endDate}"></td>
       <td th:text="${reservation.tenant.username}"></td>
       <td>
-        <a th:href="@{/offers/show/{id}(id=${reservation.offer.id})}" class="btn btn-sm btn-primary">Zobacz szczegóły</a>
+        <a th:href="@{/offers/show/{id}(id=${reservation.offer.id})}" class="button btn-sm btn-blue">Zobacz szczegóły</a>
         <form th:action="@{/reservations/delete/{id}(id=${reservation.id})}" method="post" class="d-inline">
           <input type="hidden" name="_method" value="DELETE" />
-          <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć rezerwację?')">Usuń rezerwację</button>
+          <button type="submit" class="button btn-sm btn-red" onclick="return confirm('Czy na pewno chcesz usunąć rezerwację?')">Usuń rezerwację</button>
         </form>
       </td>
     </tr>
     </tbody>
   </table>
 </section>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

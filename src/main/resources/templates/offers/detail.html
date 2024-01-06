@@ -4,37 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Szczegóły oferty</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        .detail-container {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 <body>
-<section layout:fragment="content" class="container mt-4">
+<section layout:fragment="content" class="container">
     <div class="row">
-        <div class="col-md-8">
-            <h3 class="mb-4">Szczegóły oferty</h3>
+        <div class="col">
+            <h3>Szczegóły oferty</h3>
         </div>
-        <div class="col-md-4 text-right">
-            <h3 class="mb-4">Oferta nr: <span th:text="${offer.id}"></span></h3>
+        <div class="col text-right">
+            <h3>Oferta nr: <span th:text="${offer.id}"></span></h3>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6 image-container">
+        <div class="image-container">
             <img th:src="@{'/boats/image/' + ${offer.boat.id}}" alt="Obraz łodzi" class="img-fluid"/>
         </div>
-        <div class="col-md-6 detail-container">
+        <div class="detail-container">
             <p><b>Nazwa łodzi:</b> <span th:text="${offer.boat.name}"></span></p>
             <p><b>Typ łodzi:</b> <span th:text="${offer.boat.type}"></span></p>
             <p><b>Model łodzi:</b> <span th:text="${offer.boat.model}"></span></p>
@@ -50,19 +35,21 @@
         <h3>Opis</h3>
         <p th:text="${offer.description}"></p>
     </div>
-    <div class="d-flex justify-content-between align-items-center">
-        <button type="button" onclick="window.history.back()" class="btn btn-secondary">Wróć</button>
-        <form th:if="${isOfferAvailable && T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'USER')}"
-              th:action="@{/reservations/new/{id}(id=${offer.id})}"
-              method="post">
-            <input type="submit" value="Zarezerwuj" class="btn btn-success"
-                   onclick="return confirm('Czy na pewno chcesz dokonać rezerwacji?')"/>
-        </form>
+    <div class="buttons">
+        <div class="row">
+            <div class="col">
+                <button type="button" onclick="window.history.back()" class="button btn-grey">Wróć</button>
+            </div>
+            <div class="row text-right">
+                <form th:if="${isOfferAvailable && T(com.example.sailboatsapp.security.SecurityUtils).hasRole(T(org.springframework.security.core.context.SecurityContextHolder).context.authentication, 'USER')}"
+                      th:action="@{/reservations/new/{id}(id=${offer.id})}"
+                      method="post">
+                    <input type="submit" value="Zarezerwuj" class="button btn-green"
+                           onclick="return confirm('Czy na pewno chcesz dokonać rezerwacji?')"/>
+                </form>
+            </div>
+        </div>
     </div>
 </section>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

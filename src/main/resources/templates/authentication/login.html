@@ -2,12 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org" layout:decorate="~{layout}" xmlns:layout="http://www.w3.org/1999/xhtml" lang="pl">
 <head>
     <script src="/js/errorAlertTimeout.js"></script>
+    <script src="/js/successAlertTimeout.js"></script>
 </head>
 <body>
 <section layout:fragment="content" class="offers-section">
     <h2>Zaloguj się</h2>
     <form th:action="@{/auth/login}" method="post" class="offers-section">
-        <div th:if="${message}" class="alert alert-success" id="successAlert" th:text="${message}"></div>
+        <div th:if="${message}" class="alert alert-green" id="successAlert" th:text="${message}"></div>
         <div class="form-group">
             <label for="username">Nazwa użytkownika:</label>
             <input type="text" id="username" name="username" class="form-control"/>
@@ -16,11 +17,11 @@
             <label for="password">Hasło:</label>
             <input type="password" id="password" name="password" class="form-control"/>
         </div>
-        <div th:if="${loginError}" id="errorAlert" class="alert alert-danger" th:text="${loginError}"></div>
-        <div>
-            <input type="submit" value="Zaloguj się" class="btn btn-primary"/>
-            <a href="/auth/register" class="btn btn-secondary">Zarejestruj się</a>
-            <a href="/auth/request-reset-password" class="btn btn-secondary">Zresetuj hasło</a>
+        <div th:if="${loginError}" id="errorAlert" class="alert alert-red" th:text="${loginError}"></div>
+        <div class="buttons">
+            <input type="submit" value="Zaloguj się" class="button btn-blue"/>
+            <a href="/auth/register" class="button btn-grey">Zarejestruj się</a>
+            <a href="/auth/request-reset-password" class="button btn-grey">Zresetuj hasło</a>
         </div>
     </form>
 </section>
