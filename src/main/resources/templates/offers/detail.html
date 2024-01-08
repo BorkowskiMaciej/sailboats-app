@@ -12,7 +12,7 @@
             <h3>Szczegóły oferty</h3>
         </div>
         <div class="col text-right">
-            <h3>Oferta nr: <span th:text="${offer.id}"></span></h3>
+            <h3>Numer oferty: <span th:text="${offer.id}"></span></h3>
         </div>
     </div>
     <div class="row">
@@ -21,18 +21,19 @@
         </div>
         <div class="detail-container">
             <p><b>Nazwa łodzi:</b> <span th:text="${offer.boat.name}"></span></p>
-            <p><b>Typ łodzi:</b> <span th:text="${offer.boat.type}"></span></p>
+            <p><b>Typ łodzi:</b> <span th:text="${offer.boat.type.name() == 'SAILBOAT' ? 'Żaglowy' : 'Motorowy'}"></span></p>
             <p><b>Model łodzi:</b> <span th:text="${offer.boat.model}"></span></p>
             <p><b>Port:</b> <span th:text="${offer.port}"></span></p>
             <p><b>Cena:</b> <span th:text="${offer.price}"></span> PLN</p>
             <p><b>Kaucja:</b> <span th:text="${offer.deposit}"></span> PLN</p>
-            <p><b>Data rozpoczęcia:</b> <span th:text="${offer.startDate}"></span></p>
-            <p><b>Data zakończenia:</b> <span th:text="${offer.endDate}"></span></p>
+            <p><b>Data rozpoczęcia czarteru:</b> <span th:text="${offer.startDate}"></span></p>
+            <p><b>Data zakończenia czarteru:</b> <span th:text="${offer.endDate}"></span></p>
             <p><b>Właściciel:</b> <span th:text="${offer.owner.username}"></span></p>
+            <p><b>Numer kontaktowy do właściciela:</b> <span th:text="${offer.owner.phoneNumber}"></span></p>
         </div>
     </div>
     <div class="detail-container">
-        <h3>Opis</h3>
+        <h3>Opis oferty</h3>
         <p th:text="${offer.description}"></p>
     </div>
     <div class="buttons">

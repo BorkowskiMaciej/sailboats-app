@@ -14,9 +14,9 @@
             <img th:src="@{'boats/image/' + ${offer.boat.id}}" alt="Obraz łodzi" style="width:200px;height:auto;"/>
             <div class="offer-details">
                 <h3 th:text="${offer.boat.name}">Nazwa Jachtu</h3>
-                <p th:text="${offer.description}">Opis oferty...</p>
-                <p>Cena: <span class="price" th:text="${offer.price}">Cena</span></p>
-                <p>Termin: <span th:text="${offer.startDate} + ' - ' + ${offer.endDate}">Termin</span></p>
+                <p>Model: <span th:text="${offer.boat.model} "></span></p>
+                <p>Cena: <span class="price" th:text="${offer.price} + ' PLN'"></span></p>
+                <p>Termin: <span th:text="${offer.startDate} + ' - ' + ${offer.endDate}"></span></p>
                 <p>Właściciel: <span th:text="${offer.owner.username}">Właściciel</span></p>
             </div>
             <a th:href="@{/offers/show/{id}(id=${offer.id})}">

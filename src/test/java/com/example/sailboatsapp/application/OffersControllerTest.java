@@ -2,6 +2,7 @@ package com.example.sailboatsapp.application;
 
 import com.example.sailboatsapp.domain.boat.BoatService;
 import com.example.sailboatsapp.domain.boat.entity.Boat;
+import com.example.sailboatsapp.domain.boat.entity.BoatType;
 import com.example.sailboatsapp.domain.offer.Offer;
 import com.example.sailboatsapp.domain.offer.OfferService;
 import com.example.sailboatsapp.domain.user.AppUser;
@@ -114,6 +115,7 @@ public class OffersControllerTest {
         Boat mockBoat = new Boat();
         mockBoat.setId(1L);
         mockBoat.setName("Test Boat");
+        mockBoat.setType(BoatType.MOTORBOAT);
         mockOffer.setBoat(mockBoat);
 
         AppUser mockOwner = new AppUser();

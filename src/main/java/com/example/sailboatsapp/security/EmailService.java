@@ -27,6 +27,7 @@ public class EmailService {
             message.setTo(to);
             message.setSubject("[BoroJacht] Aktywacja konta");
             message.setText("Twój kod aktywujący to: " + code);
+            log.info("Kod aktywujący dla użytkownika " + to + " to: " + code);
             emailSender.send(message);
         }
         catch (Exception e) {
@@ -41,6 +42,7 @@ public class EmailService {
             message.setTo(to);
             message.setSubject("[BoroJacht] Kod resetowania hasła");
             message.setText( "Twój kod resetowania hasła to: " + code);
+            log.info("Kod resetowania hasła dla użytkownika " + to + " to: " + code);
             emailSender.send(message);
         }
         catch (Exception e) {
